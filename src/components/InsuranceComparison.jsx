@@ -17,7 +17,7 @@ export default function InsuranceComparison() {
       marketShare: '1위',
       coverageRatio: 90,
       maxAge: 10,
-      monthlyPremium: { '1세': 22000, '3세': 25000, '5세': 30000, '7세': 38000 },
+      monthlyPremium: { '1세': 22000, '3세': 25000, '5세': 30000, '7세 이상': 38000 },
       coverage: {
         medical: 5000000,
         surgery: 10000000,
@@ -46,7 +46,7 @@ export default function InsuranceComparison() {
       logo: '⭐',
       coverageRatio: 80,
       maxAge: 10,
-      monthlyPremium: { '1세': 25000, '3세': 28000, '5세': 33000, '7세': 40000 },
+      monthlyPremium: { '1세': 25000, '3세': 28000, '5세': 33000, '7세 이상': 40000 },
       coverage: {
         medical: 6000000,
         surgery: 8000000,
@@ -75,7 +75,7 @@ export default function InsuranceComparison() {
       logo: '💎',
       coverageRatio: 100,
       maxAge: 10,
-      monthlyPremium: { '1세': 23000, '3세': 26000, '5세': 31000, '7세': 37000 },
+      monthlyPremium: { '1세': 23000, '3세': 26000, '5세': 31000, '7세 이상': 37000 },
       coverage: {
         medical: 7000000,
         surgery: 12000000,
@@ -104,7 +104,7 @@ export default function InsuranceComparison() {
       logo: '🏆',
       coverageRatio: 90,
       maxAge: 10,
-      monthlyPremium: { '1세': 27000, '3세': 30000, '5세': 36000, '7세': 45000 },
+      monthlyPremium: { '1세': 27000, '3세': 30000, '5세': 36000, '7세 이상': 45000 },
       coverage: {
         medical: 8000000,
         surgery: 15000000,
@@ -133,7 +133,7 @@ export default function InsuranceComparison() {
       logo: '🌟',
       coverageRatio: 90,
       maxAge: 12,
-      monthlyPremium: { '1세': 21000, '3세': 23000, '5세': 28000, '7세': 35000 },
+      monthlyPremium: { '1세': 21000, '3세': 23000, '5세': 28000, '7세 이상': 35000 },
       coverage: {
         medical: 6000000,
         surgery: 9000000,
@@ -162,7 +162,7 @@ export default function InsuranceComparison() {
       logo: '🎯',
       coverageRatio: 85,
       maxAge: 10,
-      monthlyPremium: { '1세': 20000, '3세': 22000, '5세': 27000, '7세': 33000 },
+      monthlyPremium: { '1세': 20000, '3세': 22000, '5세': 27000, '7세 이상': 33000 },
       coverage: {
         medical: 5000000,
         surgery: 8000000,
@@ -191,7 +191,7 @@ export default function InsuranceComparison() {
       logo: '🏅',
       coverageRatio: 85,
       maxAge: 10,
-      monthlyPremium: { '1세': 24000, '3세': 26000, '5세': 32000, '7세': 39000 },
+      monthlyPremium: { '1세': 24000, '3세': 26000, '5세': 32000, '7세 이상': 39000 },
       coverage: {
         medical: 5500000,
         surgery: 8500000,
@@ -220,7 +220,7 @@ export default function InsuranceComparison() {
       logo: '📋',
       coverageRatio: 80,
       maxAge: 10,
-      monthlyPremium: { '1세': 22000, '3세': 24000, '5세': 29000, '7세': 36000 },
+      monthlyPremium: { '1세': 22000, '3세': 24000, '5세': 29000, '7세 이상': 36000 },
       coverage: {
         medical: 5000000,
         surgery: 7500000,
@@ -320,7 +320,7 @@ export default function InsuranceComparison() {
                 <option value="1세">1세</option>
                 <option value="3세">3세</option>
                 <option value="5세">5세</option>
-                <option value="7세">7세</option>
+                <option value="7세 이상">7세 이상</option>
               </select>
             </div>
 
@@ -361,7 +361,12 @@ export default function InsuranceComparison() {
               </label>
               <button
                 onClick={() => setSelectedCompanies([])}
-                className="w-full px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors"
+                disabled={selectedCompanies.length === 0}
+                className={`w-full px-4 py-2 rounded-lg transition-colors ${
+                  selectedCompanies.length > 0
+                    ? 'bg-blue-500 text-white hover:bg-blue-600 cursor-pointer'
+                    : 'bg-gray-100 text-gray-400 cursor-not-allowed'
+                }`}
               >
                 선택 초기화
               </button>
@@ -682,6 +687,10 @@ export default function InsuranceComparison() {
             펫보험 가입 시 꼭 확인하세요!
           </h3>
           <ul className="space-y-2 text-gray-700">
+            <li className="flex items-start">
+              <span className="mr-2">•</span>
+              <span><strong>가입 나이 제한:</strong> 대부분 만 10세까지 가입 가능합니다. DB손해보험만 만 12세까지 가능!</span>
+            </li>
             <li className="flex items-start">
               <span className="mr-2">•</span>
               <span><strong>슬개골/고관절 질환:</strong> 가입 후 1년 면책기간이 있습니다. 한 살이라도 어릴 때 가입하세요!</span>
