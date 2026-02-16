@@ -255,7 +255,7 @@ function App() {
               </div>
               <div className="flex-1 text-center md:text-left">
                 <h3 className="text-2xl font-bold text-gray-900 mb-2">
-                  이희전 전문 상담사
+                  펫보험 전문 상담사
                 </h3>
                 <p className="text-gray-600 mb-3">
                   미래에셋금융서비스 소속 · 25년 경력 · 상담사 코드: 251220019
@@ -318,8 +318,8 @@ function App() {
                 <li>대표: 이희전</li>
                 <li>제휴: 미래에셋금융서비스</li>
                 <li>상담사 코드: 251220019</li>
-                <li>이메일: hejunl@hanmail.net</li>
-                <li>전화: 010-5650-0670</li>
+                <li>이메일: <a href="mailto:hejunl@hanmail.net" className="hover:text-blue-400 transition-colors">hejunl@hanmail.net</a></li>
+                <li>전화: <a href="tel:010-5650-0670" className="hover:text-blue-400 transition-colors">010-5650-0670</a></li>
               </ul>
             </div>
           </div>
@@ -335,7 +335,7 @@ function App() {
       </footer>
 
       {/* ChatBot */}
-      <ChatBot consultantName="이희전 상담사" consultantCode="251220019" />
+      <ChatBot consultantName="펫보험 전문 상담사" consultantCode="251220019" />
 
       {/* PWA 설치 안내 (모바일) */}
       <style>{`
