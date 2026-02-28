@@ -297,11 +297,11 @@ function App() {
               </p>
             </div>
             <div>
-              <h4 className="font-bold mb-4">연락처</h4>
-              <a href="mailto:hejunl@hanmail.net" className="text-gray-400 hover:text-white block">
-                📧 hejunl@hanmail.net
-              </a>
-              <p className="text-gray-400 mt-2">수인AI브릿지</p>
+              <h4 className="font-bold mb-4">고객 지원</h4>
+              <p className="text-gray-400">💬 위의 AI 챗봇 이용</p>
+              <p className="text-gray-400">📋 상담 신청 폼 작성</p>
+              <p className="text-gray-400 mt-2 text-sm">24시간 내 연락</p>
+              <p className="text-gray-400">수인AI브릿지</p>
               <p className="text-gray-400">수원시 팔달구</p>
             </div>
           </div>
