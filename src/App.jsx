@@ -135,6 +135,14 @@ function App() {
             >
               📊 8개사 상세 비교
             </a>
+            <a
+              href="/documents/PetCare+_사업계획서.pptx"
+              download
+              className="px-8 py-4 bg-yellow-400 text-gray-900 rounded-full font-bold text-lg hover:bg-yellow-500 transition-all shadow-xl transform hover:scale-105"
+              title="정부 정책자금 신청용 사업계획서"
+            >
+              📥 사업계획서 다운로드
+            </a>
           </div>
 
           <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
@@ -311,8 +319,17 @@ function App() {
               <p className="text-gray-400">수원시 팔달구</p>
             </div>
           </div>
-          <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-500">
-            <p>© 2025 PetCare+ | 수인AI브릿지 | 사업자등록번호: 151-09-03201</p>
+          <div className="border-t border-gray-800 mt-8 pt-8">
+            <div className="text-center mb-4">
+              <a
+                href="/documents/PetCare+_사업계획서.pptx"
+                download
+                className="inline-block px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all text-sm font-medium"
+              >
+                📥 정부 정책자금 신청 사업계획서 다운로드
+              </a>
+            </div>
+            <p className="text-center text-gray-500">© 2025 PetCare+ | 수인AI브릿지 | 사업자등록번호: 151-09-03201</p>
           </div>
         </div>
       </footer>
