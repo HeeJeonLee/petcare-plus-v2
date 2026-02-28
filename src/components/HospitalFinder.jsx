@@ -24,7 +24,7 @@ export default function HospitalFinder() {
 
   const getCurrentLocation = () => {
     if (!googleReady) {
-      setError('지도 서비스 로딩 중입니다. 잠시 후 다시 시도해주세요.');
+      setError('⚠️ 지도 서비스 로딩 중입니다. 1-2초 후 다시 시도해주세요.\n(Google Maps API 키가 설정되지 않았으면 작동하지 않습니다.)');
       return;
     }
     setError('');
@@ -32,7 +32,7 @@ export default function HospitalFinder() {
     setHospitals([]);
 
     if (!navigator.geolocation) {
-      setError('이 브라우저는 위치 서비스를 지원하지 않습니다.');
+      setError('❌ 이 브라우저는 위치 서비스를 지원하지 않습니다.\n크롬, 파이어폭스, 사파리 등 최신 브라우저를 사용해주세요.');
       setLoading(false);
       return;
     }
@@ -46,17 +46,31 @@ export default function HospitalFinder() {
         setLocation(coords);
         searchHospitals(coords, searchRadius); // ✅ 현재 반경 전달
       },
-      () => {
-        setError('위치 권한을 허용해주세요. 설정에서 위치 접근을 허용해야 합니다.');
+      (error) => {
+        let errorMsg = '위치 권한을 허용해주세요.';
+        if (error.code === 1) {
+          errorMsg = '❌ 위치 권한이 거부되었습니다.\n브라우저 설정에서 위치 접근을 허용해주세요.';
+        } else if (error.code === 2) {
+          errorMsg = '❌ 위치 정보를 가져올 수 없습니다.\n인터넷 연결을 확인해주세요.';
+        } else if (error.code === 3) {
+          errorMsg = '❌ 위치 조회 시간이 초과되었습니다.\n다시 시도해주세요.';
+        }
+        setError(errorMsg);
         setLoading(false);
       },
-      { timeout: 10000 }
+      { timeout: 10000, enableHighAccuracy: false }
     );
   };
 
   // ✅ radius 파라미터 추가 (상태 비동기 문제 해결)
   const searchHospitals = (coords, radius) => {
     try {
+      if (!window.google || !window.google.maps || !window.google.maps.places) {
+        setError('❌ Google Maps API 로드 실패\n.env에 VITE_GOOGLE_MAPS_API_KEY를 설정해주세요.');
+        setLoading(false);
+        return;
+      }
+
       const service = new window.google.maps.places.PlacesService(
         document.createElement('div')
       );
@@ -85,14 +99,16 @@ export default function HospitalFinder() {
           data.sort((a, b) => a.distance - b.distance);
           setHospitals(data);
           setError('');
+        } else if (status === window.google.maps.places.PlacesServiceStatus.ZERO_RESULTS) {
+          setError('📌 주변에 동물병원이 없습니다.\n반경을 넓혀서 다시 시도해주세요.');
         } else {
-          setError('주변 동물병원을 찾을 수 없습니다. 반경을 넓혀보세요.');
+          setError(`검색 오류: ${status}\n잠시 후 다시 시도해주세요.`);
         }
         setLoading(false);
       });
     } catch (err) {
       console.error('검색 오류:', err);
-      setError('검색 중 오류가 발생했습니다. 다시 시도해주세요.');
+      setError('❌ 검색 중 오류가 발생했습니다.\nGoogle Maps API 설정을 확인해주세요.');
       setLoading(false);
     }
   };

@@ -116,6 +116,13 @@ Settings → Environment Variables
 VITE_ANTHROPIC_API_KEY
 → AI 추천 & 챗봇에 필수
 → anthropic.com에서 발급
+→ https://console.anthropic.com/
+
+VITE_GOOGLE_MAPS_API_KEY
+→ 동물병원 검색에 필수!
+→ Google Cloud Console에서 발급
+→ Places API 활성화 필수
+→ https://console.cloud.google.com/
 
 선택 (있으면 좋음):
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -147,7 +154,12 @@ VITE_SUPABASE_ANON_KEY
    ✅ 필터 작동
    ✅ 정렬 작동
 
-4. 챗봇
+4. 동물병원 검색
+   ✅ "내 주변 동물병원 찾기" 버튼 클릭
+   ✅ 위치 권한 허용 후 결과 표시
+   ⚠️ VITE_GOOGLE_MAPS_API_KEY가 없으면 작동 안 함
+
+5. 챗봇
    ✅ 우하단 버튼
    ✅ 대화 가능
 
@@ -178,6 +190,35 @@ VITE_SUPABASE_ANON_KEY
 Vercel → Settings → Environment Variables
 → VITE_ANTHROPIC_API_KEY 추가
 → Redeploy
+```
+
+### 동물병원 검색이 작동 안 할 때:
+
+```
+원인 1: Google Maps API 키 없음
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+해결:
+1. https://console.cloud.google.com/ 접속
+2. API 키 생성
+3. Places API 활성화
+4. Vercel → Settings → Environment Variables
+   → VITE_GOOGLE_MAPS_API_KEY 추가
+5. Redeploy
+
+원인 2: Places API 미활성화
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+해결:
+1. Google Cloud Console 접속
+2. "Places API" 검색
+3. "활성화" 클릭
+4. Redeploy
+
+원인 3: 위치 권한 거부
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+해결:
+1. 브라우저 설정에서 사이트 위치 권한 허용
+2. 페이지 새로고침
+3. 다시 시도
 ```
 
 ---
