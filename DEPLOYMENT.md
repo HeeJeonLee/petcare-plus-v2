@@ -25,12 +25,16 @@ git push -u origin claude/initial-setup-YBsua
    - GitHub 저장소 선택: `HeeJeonLee/petcare-plus-v2`
    - Branch 선택: `claude/initial-setup-YBsua`
 
-3. **환경변수 설정**
+3. **환경변수 설정** (Vercel Dashboard → Settings → Environment Variables)
    ```
-   RESEND_API_KEY = re_JTJtjqWD_Lhqv3kNz4vaZaTdXopomf8qm
-   PETCARE_ADMIN_EMAIL = hejunl@hanmail.net
+   RESEND_API_KEY = [your-resend-api-key]
+   PETCARE_ADMIN_EMAIL = [your-email@example.com]
    PETCARE_FROM_EMAIL = noreply@petcare-plus.com
    ```
+
+   ⚠️ **중요**: API 키는 절대 `.env.local`이나 소스 코드에 포함하지 마세요!
+   - `.env.local`은 `.gitignore`에 포함되어 있습니다 ✅
+   - Vercel Dashboard에만 환경 변수를 설정하세요
 
 4. **배포**
    - "Deploy" 클릭

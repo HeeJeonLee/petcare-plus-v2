@@ -1,16 +1,21 @@
-// api/send-email.js
-// Vercel 서버리스 함수 - 상담 신청 이메일 발송
+/**
+ * Vercel Serverless Function - 이메일 발송
+ * 배포: https://petcare-plus.com/api/send-email
+ * 로컬: npm run dev:full 실행 후 /api/send-email 호출
+ */
 
 export default async function handler(req, res) {
-  // CORS 설정
+  // CORS 헤더 설정
   res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS, GET');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
+  // OPTIONS 요청 처리
   if (req.method === 'OPTIONS') {
     return res.status(200).end();
   }
 
+  // POST 요청만 허용
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
@@ -18,14 +23,17 @@ export default async function handler(req, res) {
   try {
     const { name, phone, email, petType, petAge, message } = req.body;
 
+    // API 키 확인
     const RESEND_API_KEY = process.env.RESEND_API_KEY;
-
     if (!RESEND_API_KEY) {
-      console.error('RESEND_API_KEY 환경변수 없음');
-      return res.status(500).json({ error: 'API key missing' });
+      console.error('❌ RESEND_API_KEY 환경변수 없음');
+      return res.status(500).json({
+        error: 'RESEND API key not configured',
+        message: 'Vercel에 RESEND_API_KEY를 설정하세요.'
+      });
     }
 
-    // 이메일 본문
+    // 이메일 본문 생성
     const emailHtml = `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
         <div style="background: linear-gradient(135deg, #2563eb, #7c3aed); padding: 30px; border-radius: 12px; text-align: center; margin-bottom: 30px;">
@@ -78,9 +86,12 @@ export default async function handler(req, res) {
       </div>
     `;
 
-    // 환경변수에서 이메일 주소 가져오기 (기본값 설정)
     const recipientEmail = process.env.PETCARE_ADMIN_EMAIL || 'info@petcare-plus.com';
     const fromEmail = process.env.PETCARE_FROM_EMAIL || 'noreply@petcare-plus.com';
+
+    console.log(`📧 이메일 발송 시도:`);
+    console.log(`   수신처: ${recipientEmail}`);
+    console.log(`   신청자: ${name} (${phone}, ${email})`);
 
     // Resend API 호출
     const response = await fetch('https://api.resend.com/emails', {
@@ -92,25 +103,35 @@ export default async function handler(req, res) {
       body: JSON.stringify({
         from: `PetCare+ <${fromEmail}>`,
         to: [recipientEmail],
-        cc: email ? [email] : [],  // 신청자에게도 사본 발송
+        cc: email ? [email] : [],
         subject: `[PetCare+] 새 상담 신청 - ${name}님`,
         html: emailHtml,
         replyTo: email || recipientEmail
       })
     });
 
-    const data = await response.json();
+    const resendData = await response.json();
 
     if (response.ok) {
-      console.log('이메일 발송 성공:', data);
-      return res.status(200).json({ success: true, id: data.id });
+      console.log('✅ 이메일 발송 성공:', resendData.id);
+      return res.status(200).json({
+        success: true,
+        id: resendData.id,
+        message: '이메일이 발송되었습니다.'
+      });
     } else {
-      console.error('이메일 발송 실패:', data);
-      return res.status(400).json({ error: data.message || '이메일 발송 실패' });
+      console.error('❌ 이메일 발송 실패:', resendData);
+      return res.status(400).json({
+        error: resendData.message || '이메일 발송 실패',
+        details: resendData
+      });
     }
 
   } catch (error) {
-    console.error('서버 오류:', error);
-    return res.status(500).json({ error: '서버 오류 발생' });
+    console.error('❌ 서버 오류:', error);
+    return res.status(500).json({
+      error: 'Internal server error',
+      message: error.message
+    });
   }
 }

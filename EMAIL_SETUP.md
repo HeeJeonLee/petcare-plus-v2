@@ -14,13 +14,14 @@ The email submission system has been successfully configured with the following 
   - Loads environment variables from `.env.local`
 
 ### 2. Environment Configuration
-- **File**: `.env.local`
+- **File**: `.env.local` (로컬 개발), Vercel Dashboard (프로덕션)
 - **Key Variables**:
   ```
-  RESEND_API_KEY=re_JTJtjqWD_Lhqv3kNz4vaZaTdXopomf8qm
-  PETCARE_ADMIN_EMAIL=hejunl@hanmail.net
+  RESEND_API_KEY=your_resend_api_key_here
+  PETCARE_ADMIN_EMAIL=your_email@example.com
   PETCARE_FROM_EMAIL=noreply@petcare-plus.com
   ```
+  ⚠️ `.env.local`은 git에서 무시됩니다 (.gitignore 확인)
 
 ### 3. Vite Development Server
 - **Configuration**: `vite.config.js`
@@ -85,9 +86,13 @@ When the form is submitted:
 
 ## 📨 Recipients
 
-- **Primary Recipient**: hejunl@hanmail.net
+- **Primary Recipient**: Configured in `PETCARE_ADMIN_EMAIL` environment variable
 - **CC Copy**: Sent to applicant's email address (if provided)
-- **From Address**: noreply@petcare-plus.com
+- **From Address**: Configured in `PETCARE_FROM_EMAIL` environment variable
+
+Set these values in:
+- **로컬 개발**: `.env.local` 파일
+- **프로덕션**: Vercel Dashboard → Settings → Environment Variables
 
 ## 🔍 Monitoring API Requests
 
@@ -103,13 +108,28 @@ Expected log output for successful submission:
    Message ID: <email-id>
 ```
 
+## 🚀 Production Deployment (Vercel)
+
+### Vercel API Routes
+The `api/send-email.js` file is automatically deployed as a Vercel Serverless Function:
+- **URL**: `https://your-domain.vercel.app/api/send-email`
+- **No separate server needed** - Vercel handles the backend
+- **Environment variables** are set in Vercel Dashboard
+
+### Deployment Steps
+1. Push changes to your branch
+2. Vercel auto-deploys when changes are detected
+3. Check Vercel Dashboard → Function Logs for errors
+4. Test form submission on live URL
+
 ## ⚙️ Configuration Files
 
 - **`.env.local`**: Local environment variables (not tracked in git)
 - **`.env.example`**: Template for environment variables
 - **`package.json`**: Scripts and dependencies
-- **`vite.config.js`**: Vite configuration with API proxy
-- **`api-server.js`**: Standalone API server
+- **`vite.config.js`**: Vite configuration with API proxy (로컬 개발용)
+- **`api-server.js`**: Standalone API server (로컬 개발용)
+- **`api/send-email.js`**: Vercel Serverless Function (프로덕션용)
 
 ## 🛠️ Troubleshooting
 
