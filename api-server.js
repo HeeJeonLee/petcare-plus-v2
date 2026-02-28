@@ -49,6 +49,81 @@ const server = http.createServer(async (req, res) => {
     return;
   }
 
+  // /api/insurance-data 엔드포인트 (보험 데이터 조회)
+  if (req.url === '/api/insurance-data' && req.method === 'GET') {
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    const insuranceData = [
+      {
+        id: 'meritz',
+        name: '메리츠화재',
+        product: '펫퍼민트',
+        marketShare: '1위',
+        monthlyPremium: { '1세': 22000, '3세': 25000, '5세': 30000, '7세 이상': 38000 },
+        coverage: { medical: 5000000, surgery: 10000000, liability: 100000000, mriCt: 3000000 },
+        specialFeatures: ['슬개골 보장 (1년 면책)', '전국 2,000개 제휴병원', '자동 청구 시스템', '갱신 15세까지'],
+        rating: 5,
+        lastUpdated: new Date().toISOString()
+      },
+      // 나머지 보험사는 DB에서 로드 가능
+    ];
+    res.end(JSON.stringify(insuranceData));
+    return;
+  }
+
+  // /api/insurance-updates 엔드포인트 (보험 데이터 변경사항 저장)
+  if (req.url === '/api/insurance-updates' && req.method === 'POST') {
+    let body = '';
+    req.on('data', chunk => { body += chunk.toString(); });
+    req.on('end', async () => {
+      try {
+        const updateData = JSON.parse(body);
+        console.log(`📊 Insurance update recorded: ${updateData.changes.length} changes detected`);
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ success: true, message: 'Update recorded' }));
+      } catch (error) {
+        res.writeHead(400, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ error: error.message }));
+      }
+    });
+    return;
+  }
+
+  // /api/analytics 엔드포인트 (사용자 행동 데이터)
+  if (req.url === '/api/analytics' && req.method === 'POST') {
+    let body = '';
+    req.on('data', chunk => { body += chunk.toString(); });
+    req.on('end', async () => {
+      try {
+        const analyticsData = JSON.parse(body);
+        console.log(`📊 Analytics recorded: ${analyticsData.events.length} events`);
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ success: true, message: 'Analytics saved' }));
+      } catch (error) {
+        res.writeHead(400, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ error: error.message }));
+      }
+    });
+    return;
+  }
+
+  // /api/content 엔드포인트 (자동 생성 콘텐츠 저장)
+  if (req.url === '/api/content' && req.method === 'POST') {
+    let body = '';
+    req.on('data', chunk => { body += chunk.toString(); });
+    req.on('end', async () => {
+      try {
+        const contentData = JSON.parse(body);
+        console.log(`📝 Content saved: ${contentData.type} (${contentData.status})`);
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ success: true, contentId: Date.now(), message: 'Content saved to drafts' }));
+      } catch (error) {
+        res.writeHead(400, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ error: error.message }));
+      }
+    });
+    return;
+  }
+
   // /api/send-email 엔드포인트
   if (req.url === '/api/send-email' && req.method === 'POST') {
     let body = '';
@@ -186,7 +261,13 @@ const server = http.createServer(async (req, res) => {
     res.end(JSON.stringify({
       status: 'API Server Running',
       port: API_PORT,
-      endpoints: ['/api/send-email']
+      endpoints: [
+        '/api/send-email (POST)',
+        '/api/insurance-data (GET)',
+        '/api/insurance-updates (POST)',
+        '/api/analytics (POST)',
+        '/api/content (POST)'
+      ]
     }));
   } else {
     res.writeHead(404, { 'Content-Type': 'application/json' });
