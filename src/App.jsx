@@ -1,9 +1,11 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import AIRecommendation from './components/AIRecommendation';
 import InsuranceComparison from './components/InsuranceComparison';
 import HospitalFinder from './components/HospitalFinder';
 import ClaimProcess from './components/ClaimProcess';
 import ChatBot from './components/ChatBot';
+import analytics from './utils/analytics';
+import contentGenerator from './utils/contentGenerator';
 
 function App() {
   const [formData, setFormData] = useState({
@@ -15,6 +17,24 @@ function App() {
     message: ''
   });
   const [submitting, setSubmitting] = useState(false);
+
+  // Analytics 및 Content Generation 초기화
+  useEffect(() => {
+    // 페이지 뷰 추적
+    analytics.trackPageView('landing_page', { referrer: document.referrer });
+
+    // 콘텐츠 생성 스케줄링 (선택사항)
+    if (process.env.VITE_CONTENT_GENERATION_ENABLED === 'true') {
+      contentGenerator.scheduleContentGeneration();
+    }
+
+    // 자동 최적화 제안 생성 (5분마다)
+    const optimizationInterval = setInterval(() => {
+      analytics.generateOptimizationSuggestions();
+    }, 300000);
+
+    return () => clearInterval(optimizationInterval);
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -69,7 +89,13 @@ function App() {
       }
 
       // 성공 처리
-      alert('✅ 상담 신청이 완료되었습니다!\n\n24시간 내 전문 상담사가 연락드리겠습니다.\n\n감사합니다! 🐾');
+      analytics.trackConversion('consultation_request', {
+        petType: formData.petType,
+        petAge: formData.petAge,
+        hasMessage: !!formData.message
+      });
+
+      alert('✅ 상담 신청이 완료되었습니다!\n\n24시간 내 AI 상담이 시작됩니다.\n\n감사합니다! 🐾');
       setFormData({ name: '', phone: '', email: '', petType: '', petAge: '', message: '' });
 
     } catch (error) {
