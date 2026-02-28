@@ -162,6 +162,13 @@ function App() {
 
   return (
     <div className="min-h-screen bg-white">
+      {/* 법적 면책 공고 */}
+      <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-0">
+        <p className="text-sm text-yellow-700 text-center">
+          ⚠️ <strong>면책 공고:</strong> 본 페이지는 펫보험 상품의 정보 제공을 목적으로 하며, 특정 상품 가입을 강제하거나 권유하지 않습니다. 실제 가입 전 각 보험사의 약관을 꼭 확인하시고, 필요시 보험사 고객센터에 문의하시기 바랍니다.
+        </p>
+      </div>
+
       {/* Hero Section */}
       <section className="relative bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 text-white py-20">
         <div className="absolute inset-0 bg-black opacity-10"></div>
@@ -179,20 +186,20 @@ function App() {
           <div className="flex flex-col md:flex-row gap-4 justify-center items-center">
             <a
               href="#ai-recommendation"
-              className="px-8 py-4 bg-white text-blue-600 rounded-full font-bold text-lg hover:bg-gray-100 transition-all shadow-xl transform hover:scale-105"
+              className="px-8 py-4 bg-white text-blue-600 rounded-full font-bold text-lg hover:bg-gray-50 transition-all shadow-lg transform hover:scale-105"
             >
               🎯 AI 맞춤 추천 받기
             </a>
             <a
               href="#comparison"
-              className="px-8 py-4 bg-transparent border-2 border-white text-white rounded-full font-bold text-lg hover:bg-white hover:text-blue-600 transition-all"
+              className="px-8 py-4 bg-white text-purple-600 rounded-full font-bold text-lg hover:bg-gray-50 transition-all shadow-lg transform hover:scale-105"
             >
               📊 8개사 상세 비교
             </a>
             <a
               href="/documents/PetCare+_사업계획서.pptx"
               download
-              className="px-8 py-4 bg-yellow-400 text-gray-900 rounded-full font-bold text-lg hover:bg-yellow-500 transition-all shadow-xl transform hover:scale-105"
+              className="px-8 py-4 bg-white text-pink-600 rounded-full font-bold text-lg hover:bg-gray-50 transition-all shadow-lg transform hover:scale-105"
               title="정부 정책자금 신청용 사업계획서"
             >
               📥 사업계획서 다운로드

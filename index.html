@@ -31,8 +31,10 @@
     <link rel="dns-prefetch" href="https://api.resend.com" />
     <link rel="preconnect" href="https://maps.googleapis.com" />
 
-    <!-- Google Maps API (동물병원 검색) -->
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA6fpCsRkDi4YyRmHxM-E3ToEvNeAhDjD8&libraries=places&language=ko"></script>
+    <!-- Google Maps API (동물병원 검색)
+         주의: API 키는 .env.local의 VITE_GOOGLE_MAPS_API_KEY에서 로드됩니다
+         환경변수가 설정되면 main.jsx에서 동적으로 로드됩니다 -->
+    <script id="google-maps-script"></script>
 
     <!-- 구조화된 데이터 (Schema.org) -->
     <script type="application/ld+json">
