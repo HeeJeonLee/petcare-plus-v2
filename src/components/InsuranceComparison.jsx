@@ -42,7 +42,7 @@ export default function InsuranceComparison() {
     {
       id: 'samsung',
       name: '삼성화재',
-      product: '애니펫',
+      product: '위풍댕댕',
       logo: '⭐',
       coverageRatio: 80,
       maxAge: 10,
@@ -86,7 +86,7 @@ export default function InsuranceComparison() {
         '100% 보장 비율',
         '피부 질환 특약',
         '구강 질환 특약',
-        '가성비 최고'
+        '가성비 우수'
       ],
       deductible: 10,
       waitingPeriod: 30,
@@ -112,7 +112,7 @@ export default function InsuranceComparison() {
         mriCt: 5000000
       },
       specialFeatures: [
-        'MRI/CT 한도 업계 최고',
+        'MRI/CT 한도 업계 상위',
         '고액 치료비 대비',
         '중증 질환 강화',
         '갱신 20세까지'
@@ -123,7 +123,7 @@ export default function InsuranceComparison() {
       rating: 5,
       bestFor: ['고액 치료', '검사비', '대형견'],
       recommended: ['대형견', '노령견'],
-      pros: ['MRI/CT 최고', '수술비 최고', '중증 대비'],
+      pros: ['MRI/CT 상위', '수술비 높음', '중증 대비'],
       cons: ['보험료 가장 높음', '자기부담금 20%']
     },
     {
@@ -160,7 +160,7 @@ export default function InsuranceComparison() {
     {
       id: 'db',
       name: 'DB손해보험',
-      product: '프로미라이프 펫블리',
+      product: '펫블리',
       logo: '🌟',
       coverageRatio: 90,
       maxAge: 12,
@@ -189,7 +189,7 @@ export default function InsuranceComparison() {
     {
       id: 'nh',
       name: 'NH농협손해보험',
-      product: '지킴이펫',
+      product: 'NH가성비굿',
       logo: '🏅',
       coverageRatio: 85,
       maxAge: 10,
@@ -212,13 +212,13 @@ export default function InsuranceComparison() {
       rating: 3,
       bestFor: ['배상책임 중시', '장례비용'],
       recommended: ['배상책임 우려'],
-      pros: ['배상책임 최고', '장례비용', '조합원 할인'],
+      pros: ['배상책임 높음', '장례비용', '조합원 할인'],
       cons: ['보장 한도 중간']
     },
     {
       id: 'lotte',
       name: '롯데/하나손해보험',
-      product: '펫보험',
+      product: 'let:click',
       logo: '📋',
       coverageRatio: 80,
       maxAge: 10,
@@ -292,7 +292,7 @@ export default function InsuranceComparison() {
   const displayedCompanies = getSortedCompanies();
   const compareCompanies = selectedCompanies.length > 0
     ? insuranceCompanies.filter(c => selectedCompanies.includes(c.id))
-    : displayedCompanies.slice(0, 3);
+    : displayedCompanies;
 
   return (
     <section id="comparison" className="py-20 bg-white">
@@ -710,6 +710,16 @@ export default function InsuranceComparison() {
               <span><strong>갱신 한도:</strong> 15-20세까지 차이가 납니다. 장기 보장이 중요합니다.</span>
             </li>
           </ul>
+        </div>
+
+        {/* 법적 면책 공고 */}
+        <div className="mt-8 bg-gray-50 border border-gray-200 p-6 rounded-lg">
+          <p className="text-xs text-gray-500 leading-relaxed">
+            ※ 본 페이지는 특정 보험 상품의 권유가 아닌, 반려동물 양육 비용 최적화를 위한 정보 제공 및 전문가 연결 서비스를 목적으로 합니다.
+            표시된 보험료 및 보장 내용은 참고용이며, 실제 보험료는 반려동물의 종류, 나이, 건강 상태 등에 따라 달라질 수 있습니다.
+            정확한 보장 내용은 각 보험사의 약관을 반드시 확인하시기 바랍니다.
+            보험 상품에 관한 자세한 사항은 해당 보험사 고객센터로 문의하세요.
+          </p>
         </div>
       </div>
     </section>

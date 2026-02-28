@@ -1,15 +1,15 @@
 import { useState, useRef, useEffect } from 'react';
 
-export default function ChatBot({ consultantName = "AI 상담사", consultantCode = "" }) {
+export default function ChatBot({ consultantName = "PetCare+ AI 전문가", consultantCode = "" }) {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState([
     {
       role: 'assistant',
-      content: `안녕하세요! 😊 ${consultantName}입니다.
+      content: `안녕하세요! 😊 PetCare+ AI 펫보험 전문가입니다.
 
-미래에셋금융서비스 펫보험 전문 상담사이며, Claude AI를 기반으로 24시간 맞춤 상담을 제공합니다.
+Claude AI를 기반으로 24시간 맞춤 상담을 제공합니다.
 
-우리 아이의 견종, 나이, 건강 상태를 알려주시면 8개 보험사(메리츠, 삼성, 현대, KB, DB, 한화, 농협, 롯데) 중 최적의 상품을 추천해드립니다. 🐾
+우리 아이의 견종, 나이, 건강 상태를 알려주시면 8개 보험사(메리츠, 삼성, 현대, KB, DB, 한화, 농협, 롯데) 중 적합한 상품을 안내해드립니다. 🐾
 
 편하게 물어봐 주세요!`
     }
@@ -52,21 +52,24 @@ export default function ChatBot({ consultantName = "AI 상담사", consultantCod
       "슬개골": "가입 후 1년 면책기간이 있습니다. 한 살이라도 어릴 때 가입하세요!",
       "면책기간": "일반 질병은 30일, 슬개골/고관절은 1년 면책기간이 있습니다.",
       "자기부담금": "보험사마다 10~20%입니다. 낮을수록 유리합니다.",
-      "MRI": "KB가 업계 최고 한도입니다. 대형견에게 추천드립니다.",
+      "MRI": "KB가 MRI/CT 보장 한도가 높은 편입니다. 대형견에게 추천드립니다.",
       "다견": "삼성화재가 다견 10% 할인을 제공합니다.",
       "치과": "삼성과 DB가 치과 특약이 강력합니다."
     }
   };
 
   const generateSystemPrompt = () => {
-    return `당신은 Claude AI 기반의 최고 수준 펫보험 전문 상담사입니다. 이름은 ${consultantName}입니다.
+    return `당신은 Claude AI 기반의 전문적인 펫보험 상담 AI입니다. 이름은 PetCare+ AI 전문가입니다.
+수인AI브릿지에서 운영하는 펫보험 정보 제공 및 전문가 연결 서비스입니다.
 
 **역할:**
 - 친구처럼 편하게 대화하면서도 전문성 있는 상담
 - 고객의 반려동물을 진심으로 아끼는 마음으로 대화
 - 보험 용어는 쉽게 풀어서 설명
 - 공감과 배려를 최우선으로
-- 24시간 실시간 응답으로 최고의 경험 제공
+- 24시간 실시간 응답으로 최상의 경험 제공
+- 가능한 한 고객의 모든 궁금증을 해결하여 별도 전화 상담이 불필요하도록 대응
+- 견종별 유전질환, 보험사별 특약, 보험금 청구 방법 등 폭넓은 지식 제공
 
 **대화 스타일 (매우 중요!):**
 - 자연스럽고 편안한 대화 (친구처럼)
@@ -81,6 +84,9 @@ export default function ChatBot({ consultantName = "AI 상담사", consultantCod
 ❌ 리스트형 답변 (•, -, 1. 2. 등)
 ❌ 과도하게 긴 설명
 ❌ 딱딱한 공식적인 말투
+❌ 전화번호 안내 (전화 상담 대신 이 AI 챗봇으로 완전 해결)
+❌ "최고", "최저가", "무조건" 등 확정적 표현
+❌ 특정 상품 강제 권유
 
 **8개사 보험 정보:**
 ${JSON.stringify(insuranceKnowledge, null, 2)}
@@ -199,9 +205,9 @@ DB 23,000원 (가장 저렴), 한화 22,000원, 메리츠 25,000원, 현대 26,0
     if (input.includes('상담') || input.includes('신청') || input.includes('가입')) {
       return `네! 좋아요 😊
 
-페이지 아래쪽에 무료 상담 신청 폼이 있어요. 거기에 연락처 남겨주시면 24시간 내로 제가 전화드릴게요!
+저한테 궁금한 거 다 물어봐 주세요! 보험사별 비교, 견종별 추천, 보험금 청구 방법 등 다 안내해드려요.
 
-전화 상담도 되고 비대면 가입도 가능하니까 편한 방법으로 진행하시면 돼요 👍`;
+더 자세한 맞춤 분석이 필요하시면 페이지 아래쪽에 무료 리포트 신청 폼이 있어요. 연락처 남겨주시면 24시간 내 맞춤 리포트를 보내드립니다 📋`;
     }
     
     // 기본 응답

@@ -39,15 +39,41 @@ function App() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (submitting) return;
+
+    // 📋 폼 유효성 검사
+    if (!formData.name.trim()) {
+      alert('❌ 이름을 입력해주세요.');
+      return;
+    }
+
+    const phoneRegex = /^(\d{3})-?(\d{3,4})-?(\d{4})$|^\d{10,11}$/;
+    if (!formData.phone.trim() || !phoneRegex.test(formData.phone.replace(/-/g, ''))) {
+      alert('❌ 올바른 연락처를 입력해주세요. (예: 010-1234-5678)');
+      return;
+    }
+
+    if (formData.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      alert('❌ 올바른 이메일을 입력해주세요.');
+      return;
+    }
+
     setSubmitting(true);
 
     try {
-      const supabaseUrl = 'https://cpejxivbyvlpkmthgwfq.supabase.co';
+      // 🔒 환경 변수에서 값 읽기
+      const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
       const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+      const consultantCode = import.meta.env.VITE_CONSULTANT_CODE || '251220019';
+      const consultantPhone = import.meta.env.VITE_CONSULTANT_PHONE || '';
+
+      if (!supabaseUrl || !supabaseKey) {
+        throw new Error('Supabase 설정이 필요합니다.');
+      }
 
       // 1단계: Supabase DB 저장
       let dbSaved = false;
-      if (supabaseKey) {
+
+      try {
         const dbRes = await fetch(`${supabaseUrl}/rest/v1/consultant_inquiries`, {
           method: 'POST',
           headers: {
@@ -57,21 +83,28 @@ function App() {
             'Prefer': 'return=minimal'
           },
           body: JSON.stringify({
-            name: formData.name,
-            phone: formData.phone,
-            email: formData.email,
+            name: formData.name.trim(),
+            phone: formData.phone.trim(),
+            email: formData.email?.trim() || null,
             pet_type: formData.petType,
             pet_age: formData.petAge,
-            message: formData.message,
-            consultant_code: '251220019'
+            message: formData.message?.trim() || '',
+            consultant_code: consultantCode
           })
         });
         dbSaved = dbRes.ok || dbRes.status === 201;
+        if (!dbSaved) {
+          const errorText = await dbRes.text();
+          console.warn('📦 Supabase 저장 실패:', errorText);
+        }
+      } catch (dbErr) {
+        console.error('📦 Supabase 연결 오류:', dbErr);
       }
 
-      // 2단계: 이메일 발송 API 호출
+      // 2단계: 이메일 발송 API 호출 (선택)
+      let emailSent = false;
       try {
-        await fetch('/api/send-email', {
+        const emailRes = await fetch('/api/send-email', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -83,24 +116,45 @@ function App() {
             message: formData.message
           })
         });
+
+        if (!emailRes.ok) {
+          const errorData = await emailRes.json();
+          console.warn('📧 이메일 발송 실패:', errorData);
+        } else {
+          emailSent = true;
+          console.log('✅ 이메일 발송 성공');
+        }
       } catch (emailErr) {
-        console.error('이메일 발송 오류 (무시):', emailErr);
-        // 이메일 실패해도 신청은 완료 처리
+        console.warn('📧 이메일 서비스 오류:', emailErr.message);
+      }
+
+      // 3단계: 성공 여부 판단
+      if (!dbSaved && !emailSent) {
+        throw new Error('상담 신청을 처리할 수 없습니다. 나중에 다시 시도해주세요.');
       }
 
       // 성공 처리
       analytics.trackConversion('consultation_request', {
         petType: formData.petType,
         petAge: formData.petAge,
-        hasMessage: !!formData.message
+        hasMessage: !!formData.message,
+        dbSaved,
+        emailSent
       });
 
-      alert('✅ 상담 신청이 완료되었습니다!\n\n24시간 내 AI 상담이 시작됩니다.\n\n감사합니다! 🐾');
+      // 성공 메시지
+      let successMsg = '✅ 상담 신청이 완료되었습니다!\n\n';
+      if (dbSaved) successMsg += '📦 신청 정보가 저장되었습니다.\n';
+      if (emailSent) successMsg += '📧 확인 이메일이 발송되었습니다.\n';
+      successMsg += '\n24시간 내 연락드리겠습니다.\n감사합니다! 🐾';
+
+      alert(successMsg);
       setFormData({ name: '', phone: '', email: '', petType: '', petAge: '', message: '' });
 
     } catch (error) {
-      console.error('상담 신청 오류:', error);
-      alert('📞 전화로 상담 신청해주세요!\n\n010-5650-0670\n\n(평일 09:00-18:00)');
+      console.error('❌ 상담 신청 오류:', error);
+      const consultantPhone = import.meta.env.VITE_CONSULTANT_PHONE || '';
+      alert(`❌ 오류가 발생했습니다.\n\n💬 아래 AI 챗봇에서 도움을 받으시거나\n📋 잠시 후 다시 시도해주세요.\n\n(24시간 AI 상담 가능)`);
     } finally {
       setSubmitting(false);
     }
@@ -159,7 +213,7 @@ function App() {
             <div className="bg-white bg-opacity-20 backdrop-blur-sm rounded-xl p-6 flex flex-col h-full">
               <div className="text-4xl mb-3">🏆</div>
               <h3 className="font-bold text-xl mb-2">미래에셋 GA</h3>
-              <p className="opacity-90 flex-grow">미래에셋금융서비스 펫보험 전문 상담사</p>
+              <p className="opacity-90 flex-grow">수인AI브릿지 펫보험 전문가 상담</p>
             </div>
           </div>
         </div>
@@ -316,7 +370,7 @@ function App() {
               <p className="text-gray-400">📋 상담 신청 폼 작성</p>
               <p className="text-gray-400 mt-2 text-sm">24시간 내 연락</p>
               <p className="text-gray-400">수인AI브릿지</p>
-              <p className="text-gray-400">수원시 팔달구</p>
+              <p className="text-gray-400">수원시 영통구</p>
             </div>
           </div>
           <div className="border-t border-gray-800 mt-8 pt-8">
@@ -329,7 +383,8 @@ function App() {
                 📥 정부 정책자금 신청 사업계획서 다운로드
               </a>
             </div>
-            <p className="text-center text-gray-500">© 2025 PetCare+ | 수인AI브릿지 | 사업자등록번호: 151-09-03201</p>
+            <p className="text-center text-gray-500">© 2026 PetCare+ | 수인AI브릿지 | 사업자등록번호: 151-09-03201</p>
+            <p className="text-center text-gray-600 text-xs mt-2">본 페이지는 특정 보험 상품의 권유가 아닌, 정보 제공 및 전문가 연결 서비스를 목적으로 합니다.</p>
           </div>
         </div>
       </footer>
