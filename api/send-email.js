@@ -71,12 +71,16 @@ export default async function handler(req, res) {
         </div>
 
         <div style="text-align: center; padding: 20px; color: #94a3b8; font-size: 12px;">
-          <p>PetCare+ | 수인AI브릿지 | 이희전 상담사</p>
-          <p>📞 010-5650-0670 | 📧 hejunl@hanmail.net</p>
-          <p>사업자등록번호: 119-13-49535 | 수원시 팔달구</p>
+          <p>PetCare+ | 수인AI브릿지 | Claude AI 기반 펫보험 상담</p>
+          <p>📧 ${email ? `답변: ${email}` : 'AI 챗봇에서 24시간 상담 가능'}</p>
+          <p>사업자등록번호: 151-09-03201 | 수원시 팔달구</p>
         </div>
       </div>
     `;
+
+    // 환경변수에서 이메일 주소 가져오기 (기본값 설정)
+    const recipientEmail = process.env.PETCARE_ADMIN_EMAIL || 'info@petcare-plus.com';
+    const fromEmail = process.env.PETCARE_FROM_EMAIL || 'noreply@petcare-plus.com';
 
     // Resend API 호출
     const response = await fetch('https://api.resend.com/emails', {
@@ -86,10 +90,12 @@ export default async function handler(req, res) {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        from: 'PetCare+ <onboarding@resend.dev>',
-        to: ['hejunl@hanmail.net'],
-        subject: `[PetCare+] 새 상담 신청 - ${name}님 (${phone})`,
-        html: emailHtml
+        from: `PetCare+ <${fromEmail}>`,
+        to: [recipientEmail],
+        cc: email ? [email] : [],  // 신청자에게도 사본 발송
+        subject: `[PetCare+] 새 상담 신청 - ${name}님`,
+        html: emailHtml,
+        replyTo: email || recipientEmail
       })
     });
 

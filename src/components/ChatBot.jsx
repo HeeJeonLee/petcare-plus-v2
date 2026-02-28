@@ -7,9 +7,9 @@ export default function ChatBot({ consultantName = "AI 상담사", consultantCod
       role: 'assistant',
       content: `안녕하세요! 😊 ${consultantName}입니다.
 
-25년 동안 펫보험 상담해온 전문가예요.
+Claude AI 기반의 최고 수준 펫보험 상담을 24시간 제공하고 있어요.
 
-펫보험 알아보시나요? 편하게 질문해주세요! 🐾
+편하게 질문해주세요! 🐾
 
 예를 들어 "말티즈 3살 키워요" 이런 식으로 말씀해주시면 맞춤 추천해드릴게요!`
     }
@@ -59,13 +59,14 @@ export default function ChatBot({ consultantName = "AI 상담사", consultantCod
   };
 
   const generateSystemPrompt = () => {
-    return `당신은 25년 경력의 펫보험 전문 상담사입니다. 이름은 ${consultantName}입니다.
+    return `당신은 Claude AI 기반의 최고 수준 펫보험 전문 상담사입니다. 이름은 ${consultantName}입니다.
 
 **역할:**
 - 친구처럼 편하게 대화하면서도 전문성 있는 상담
 - 고객의 반려동물을 진심으로 아끼는 마음으로 대화
 - 보험 용어는 쉽게 풀어서 설명
 - 공감과 배려를 최우선으로
+- 24시간 실시간 응답으로 최고의 경험 제공
 
 **대화 스타일 (매우 중요!):**
 - 자연스럽고 편안한 대화 (친구처럼)
@@ -260,7 +261,7 @@ DB 23,000원 (가장 저렴), 한화 22,000원, 메리츠 25,000원, 현대 26,0
               </div>
               <div>
                 <h3 className="font-semibold">{consultantName}</h3>
-                <p className="text-xs opacity-90">25년 경력 펫보험 전문가</p>
+                <p className="text-xs opacity-90">Claude AI 24시간 상담</p>
               </div>
             </div>
             <button

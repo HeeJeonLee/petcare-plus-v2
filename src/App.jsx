@@ -148,13 +148,13 @@ function App() {
         <div className="max-w-4xl mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-4xl font-bold text-gray-900 mb-4">
-              📞 전문가 상담 신청
+              💬 AI 무료 상담 신청
             </h2>
             <p className="text-xl text-gray-600">
-              25년 경력 펫보험 전문가가 직접 상담해드립니다
+              AI 챗봇이 24시간 실시간으로 답변해드립니다
             </p>
             <div className="mt-4 inline-block px-6 py-3 bg-yellow-100 text-yellow-800 rounded-full font-semibold">
-              ✨ 무료 상담 · 비대면 가능 · 24시간 내 연락
+              ✨ 무료 상담 · 비대면 · 24시간 실시간 응답
             </div>
           </div>
 
@@ -244,10 +244,7 @@ function App() {
               </button>
 
               <div className="text-center">
-                <p className="text-gray-500 text-sm">또는 직접 전화 상담</p>
-                <a href="tel:010-5650-0670" className="text-2xl font-bold text-blue-600 hover:text-blue-800">
-                  📞 010-5650-0670
-                </a>
+                <p className="text-gray-500 text-sm">아래 AI 챗봇에서 24시간 실시간 상담 가능합니다 💬</p>
               </div>
             </form>
           </div>
@@ -265,13 +262,13 @@ function App() {
               </p>
             </div>
             <div>
-              <h4 className="font-bold mb-4">전문 상담사</h4>
-              <p className="text-gray-400">이희전 상담사</p>
-              <p className="text-gray-400">미래에셋금융서비스</p>
-              <p className="text-gray-400">경력 25년</p>
-              <a href="tel:010-5650-0670" className="text-blue-400 hover:text-blue-300 block mt-1">
-                📞 010-5650-0670
-              </a>
+              <h4 className="font-bold mb-4">🤖 AI 상담사</h4>
+              <p className="text-gray-400">PetCare+ AI Assistant</p>
+              <p className="text-gray-400">Claude AI 기반</p>
+              <p className="text-gray-400">24시간 실시간 응답</p>
+              <p className="text-blue-400 block mt-2 text-sm">
+                💬 아래 챗봇에서 바로 상담 가능
+              </p>
             </div>
             <div>
               <h4 className="font-bold mb-4">연락처</h4>
@@ -283,7 +280,7 @@ function App() {
             </div>
           </div>
           <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-500">
-            <p>© 2025 PetCare+ | 수인AI브릿지 | 사업자등록번호: 119-13-49535</p>
+            <p>© 2025 PetCare+ | 수인AI브릿지 | 사업자등록번호: 151-09-03201</p>
           </div>
         </div>
       </footer>

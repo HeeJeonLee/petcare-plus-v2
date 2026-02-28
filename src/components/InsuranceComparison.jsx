@@ -127,35 +127,6 @@ export default function InsuranceComparison() {
       cons: ['보험료 가장 높음', '자기부담금 20%']
     },
     {
-      id: 'db',
-      name: 'DB손해보험',
-      product: '프로미라이프 펫블리',
-      logo: '🌟',
-      coverageRatio: 90,
-      maxAge: 12,
-      monthlyPremium: { '1세': 21000, '3세': 23000, '5세': 28000, '7세 이상': 35000 },
-      coverage: {
-        medical: 6000000,
-        surgery: 9000000,
-        liability: 80000000,
-        mriCt: 2800000
-      },
-      specialFeatures: [
-        '슬개골 탈구 특화',
-        '구강 질환 특화',
-        '행동교정 훈련비',
-        '만 12세까지 가입'
-      ],
-      deductible: 10,
-      waitingPeriod: 30,
-      renewalLimit: 17,
-      rating: 4,
-      bestFor: ['슬개골', '소형견', '유전 질환'],
-      recommended: ['말티즈', '포메라니안', '요크셔테리어'],
-      pros: ['슬개골 특화', '12세 가입', '가격 저렴'],
-      cons: ['배상책임 낮음']
-    },
-    {
       id: 'hanwha',
       name: '한화손해보험',
       product: '댕댕이',
@@ -183,6 +154,35 @@ export default function InsuranceComparison() {
       recommended: ['예산 제한', '건강한 반려동물'],
       pros: ['가격 가장 저렴', '실속형'],
       cons: ['보장 한도 낮음', '갱신 15세']
+    },
+    {
+      id: 'db',
+      name: 'DB손해보험',
+      product: '프로미라이프 펫블리',
+      logo: '🌟',
+      coverageRatio: 90,
+      maxAge: 12,
+      monthlyPremium: { '1세': 21000, '3세': 23000, '5세': 28000, '7세 이상': 35000 },
+      coverage: {
+        medical: 6000000,
+        surgery: 9000000,
+        liability: 80000000,
+        mriCt: 2800000
+      },
+      specialFeatures: [
+        '슬개골 탈구 특화',
+        '구강 질환 특화',
+        '행동교정 훈련비',
+        '만 12세까지 가입'
+      ],
+      deductible: 10,
+      waitingPeriod: 30,
+      renewalLimit: 17,
+      rating: 4,
+      bestFor: ['슬개골', '소형견', '유전 질환'],
+      recommended: ['말티즈', '포메라니안', '요크셔테리어'],
+      pros: ['슬개골 특화', '12세 가입', '가격 저렴'],
+      cons: ['배상책임 낮음']
     },
     {
       id: 'nh',
