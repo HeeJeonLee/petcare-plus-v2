@@ -137,21 +137,21 @@ function App() {
             </a>
           </div>
 
-          <div className="mt-12 grid md:grid-cols-3 gap-6 text-left">
-            <div className="bg-white bg-opacity-20 backdrop-blur-sm rounded-xl p-6">
+          <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
+            <div className="bg-white bg-opacity-20 backdrop-blur-sm rounded-xl p-6 flex flex-col h-full">
               <div className="text-4xl mb-3">🤖</div>
               <h3 className="font-bold text-xl mb-2">AI 맞춤 추천</h3>
-              <p className="opacity-90">우리 아이 정보 입력하면 AI가 최적 보험 추천</p>
+              <p className="opacity-90 flex-grow">우리 아이 정보 입력하면 AI가 최적 보험 추천</p>
             </div>
-            <div className="bg-white bg-opacity-20 backdrop-blur-sm rounded-xl p-6">
+            <div className="bg-white bg-opacity-20 backdrop-blur-sm rounded-xl p-6 flex flex-col h-full">
               <div className="text-4xl mb-3">📊</div>
               <h3 className="font-bold text-xl mb-2">8개사 상세 비교</h3>
-              <p className="opacity-90">메리츠, 삼성, 현대, KB, DB, 한화, 농협, 롯데</p>
+              <p className="opacity-90 flex-grow">메리츠, 삼성, 현대, KB, DB, 한화, 농협, 롯데</p>
             </div>
-            <div className="bg-white bg-opacity-20 backdrop-blur-sm rounded-xl p-6">
-              <div className="text-4xl mb-3">👨‍⚕️</div>
-              <h3 className="font-bold text-xl mb-2">25년 경력 전문가</h3>
-              <p className="opacity-90">미래에셋 소속 펫보험 전문 상담사</p>
+            <div className="bg-white bg-opacity-20 backdrop-blur-sm rounded-xl p-6 flex flex-col h-full">
+              <div className="text-4xl mb-3">🏆</div>
+              <h3 className="font-bold text-xl mb-2">미래에셋 GA</h3>
+              <p className="opacity-90 flex-grow">미래에셋금융서비스 펫보험 전문 상담사</p>
             </div>
           </div>
         </div>
@@ -174,13 +174,13 @@ function App() {
         <div className="max-w-4xl mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-4xl font-bold text-gray-900 mb-4">
-              💬 AI 무료 상담 신청
+              💬 펫 라이프 맞춤 설계 리포트 신청
             </h2>
             <p className="text-xl text-gray-600">
-              AI 챗봇이 24시간 실시간으로 답변해드립니다
+              반려견 맞춤형 보장 분석 및 전문가 연결 서비스
             </p>
             <div className="mt-4 inline-block px-6 py-3 bg-yellow-100 text-yellow-800 rounded-full font-semibold">
-              ✨ 무료 상담 · 비대면 · 24시간 실시간 응답
+              ✨ 무료 분석 · 비대면 · 24시간 전문가 상담
             </div>
           </div>
 
@@ -266,11 +266,17 @@ function App() {
                 disabled={submitting}
                 className="w-full py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg font-bold text-xl hover:from-blue-700 hover:to-purple-700 disabled:from-gray-400 disabled:to-gray-400 disabled:cursor-not-allowed transition-all shadow-lg transform hover:scale-105"
               >
-                {submitting ? '⏳ 처리 중...' : '📋 상담 신청하기'}
+                {submitting ? '⏳ 처리 중...' : '📋 리포트 신청하기'}
               </button>
 
-              <div className="text-center">
-                <p className="text-gray-500 text-sm">아래 AI 챗봇에서 24시간 실시간 상담 가능합니다 💬</p>
+              <div className="text-center mt-6">
+                <p className="text-gray-600 text-sm mb-4">
+                  아래 AI 챗봇에서 24시간 실시간 전문가 상담을 받으실 수 있습니다 💬
+                </p>
+                <p className="text-gray-500 text-xs bg-gray-50 p-4 rounded-lg">
+                  본 페이지는 특정 보험 상품의 권유가 아닌, 반려견 양육 비용 최적화를 위한 정보 제공 및 전문가 연결 서비스를 목적으로 합니다.<br/>
+                  상세 보장 내용은 개별 보험사 약관을 확인하시기 바랍니다.
+                </p>
               </div>
             </form>
           </div>

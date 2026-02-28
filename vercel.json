@@ -1,4 +1,16 @@
 {
   "buildCommand": "npm run build",
-  "outputDirectory": "dist"
+  "devCommand": "vite",
+  "installCommand": "npm install",
+  "env": {
+    "RESEND_API_KEY": "@resend_api_key",
+    "PETCARE_ADMIN_EMAIL": "@petcare_admin_email",
+    "PETCARE_FROM_EMAIL": "@petcare_from_email"
+  },
+  "functions": {
+    "api/**/*.js": {
+      "memory": 1024,
+      "maxDuration": 10
+    }
+  }
 }

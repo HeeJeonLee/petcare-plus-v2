@@ -129,31 +129,33 @@ export default function InsuranceComparison() {
     {
       id: 'hanwha',
       name: '한화손해보험',
-      product: '댕댕이',
-      logo: '🎯',
-      coverageRatio: 85,
-      maxAge: 10,
-      monthlyPremium: { '1세': 20000, '3세': 22000, '5세': 27000, '7세 이상': 33000 },
+      product: '시그니처 펫보험 (2026년 신상품)',
+      logo: '✨',
+      coverageRatio: 95,
+      maxAge: 12,
+      monthlyPremium: { '1세': 22000, '3세': 32000, '5세': 38000, '7세 이상': 45000 },
       coverage: {
-        medical: 5000000,
-        surgery: 8000000,
-        liability: 100000000,
-        mriCt: 2000000
+        medical: 7000000,
+        surgery: 10000000,
+        liability: 150000000,
+        mriCt: 3500000,
+        dentalOrtho: 2000000
       },
       specialFeatures: [
-        '실속 있는 보험료',
-        '핵심 보장 위주',
-        '온라인 가입 할인',
-        '갱신 15세까지'
+        '2026년 신상품 출시',
+        '보장 범위 대폭 확대',
+        '치과 질환 신규 담보',
+        '노령견 특화 담보',
+        '갱신 18세까지 (확대)'
       ],
-      deductible: 15,
+      deductible: 10,
       waitingPeriod: 30,
-      renewalLimit: 15,
-      rating: 3,
-      bestFor: ['실속파', '예산 중시', '기본 보장'],
-      recommended: ['예산 제한', '건강한 반려동물'],
-      pros: ['가격 가장 저렴', '실속형'],
-      cons: ['보장 한도 낮음', '갱신 15세']
+      renewalLimit: 18,
+      rating: 4,
+      bestFor: ['신상품', '치과', '노령견'],
+      recommended: ['높은 보장 원하는 고객', '장기 보장 원하는 고객'],
+      pros: ['신상품 출시', '보장 확대', '치과/노령견 특화'],
+      cons: ['보험료 인상']
     },
     {
       id: 'db',
