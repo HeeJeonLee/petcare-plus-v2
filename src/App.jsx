@@ -3,6 +3,8 @@ import AIRecommendation from './components/AIRecommendation';
 import InsuranceComparison from './components/InsuranceComparison';
 import HospitalFinder from './components/HospitalFinder';
 import ClaimProcess from './components/ClaimProcess';
+import HealthCalculator from './components/HealthCalculator';
+import MyPage from './components/MyPage';
 import ChatBot from './components/ChatBot';
 import analytics from './utils/analytics';
 import contentGenerator from './utils/contentGenerator';
@@ -142,6 +144,25 @@ function App() {
         emailSent
       });
 
+      // localStorage에 상담 기록 저장 (MyPage 표시용)
+      try {
+        const consultationRecord = {
+          name: formData.name,
+          phone: formData.phone,
+          email: formData.email,
+          petType: formData.petType,
+          petAge: formData.petAge,
+          message: formData.message,
+          timestamp: new Date().toISOString()
+        };
+
+        const savedRecords = JSON.parse(localStorage.getItem('formSubmissions') || '[]');
+        savedRecords.unshift(consultationRecord);
+        localStorage.setItem('formSubmissions', JSON.stringify(savedRecords.slice(0, 50)));
+      } catch (err) {
+        console.log('localStorage 저장 실패:', err);
+      }
+
       // 성공 메시지
       let successMsg = '✅ 상담 신청이 완료되었습니다!\n\n';
       if (dbSaved) successMsg += '📦 신청 정보가 저장되었습니다.\n';
@@ -197,6 +218,21 @@ function App() {
               📊 8개사 상세 비교
             </a>
             <a
+              href="#health-calculator"
+              className="px-8 py-4 bg-white text-green-600 rounded-full font-bold text-lg hover:bg-gray-50 transition-all shadow-lg transform hover:scale-105"
+            >
+              💚 의료비 계산기
+            </a>
+          </div>
+
+          <div className="mt-6 flex flex-col sm:flex-row gap-4 justify-center items-center">
+            <a
+              href="#mypage"
+              className="px-8 py-4 bg-white text-indigo-600 rounded-full font-bold text-lg hover:bg-gray-50 transition-all shadow-lg transform hover:scale-105"
+            >
+              📋 나의 상담 기록
+            </a>
+            <a
               href="/documents/PetCare+_사업계획서.pptx"
               download
               className="px-8 py-4 bg-white text-pink-600 rounded-full font-bold text-lg hover:bg-gray-50 transition-all shadow-lg transform hover:scale-105"
@@ -206,7 +242,7 @@ function App() {
             </a>
           </div>
 
-          <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
+          <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 text-left">
             <div className="bg-white bg-opacity-20 backdrop-blur-sm rounded-xl p-6 flex flex-col h-full">
               <div className="text-4xl mb-3">🤖</div>
               <h3 className="font-bold text-xl mb-2">AI 맞춤 추천</h3>
@@ -218,8 +254,18 @@ function App() {
               <p className="opacity-90 flex-grow">메리츠, 삼성, 현대, KB, DB, 한화, 농협, 롯데</p>
             </div>
             <div className="bg-white bg-opacity-20 backdrop-blur-sm rounded-xl p-6 flex flex-col h-full">
+              <div className="text-4xl mb-3">💚</div>
+              <h3 className="font-bold text-xl mb-2">의료비 계산기</h3>
+              <p className="opacity-90 flex-grow">월 예상 의료비와 적정 보험료 자동 계산</p>
+            </div>
+            <div className="bg-white bg-opacity-20 backdrop-blur-sm rounded-xl p-6 flex flex-col h-full">
+              <div className="text-4xl mb-3">📋</div>
+              <h3 className="font-bold text-xl mb-2">나의 기록</h3>
+              <p className="opacity-90 flex-grow">상담 신청과 계산 이력을 한눈에 확인</p>
+            </div>
+            <div className="bg-white bg-opacity-20 backdrop-blur-sm rounded-xl p-6 flex flex-col h-full">
               <div className="text-4xl mb-3">💬</div>
-              <h3 className="font-bold text-xl mb-2">AI 챗봇 상담</h3>
+              <h3 className="font-bold text-xl mb-2">AI 챗봇</h3>
               <p className="opacity-90 flex-grow">Claude AI 기반 24시간 무료 실시간 상담</p>
             </div>
           </div>
@@ -237,6 +283,12 @@ function App() {
 
       {/* 보험금 청구 프로세스 */}
       <ClaimProcess />
+
+      {/* 월 예상 의료비 계산기 */}
+      <HealthCalculator />
+
+      {/* 나의 상담 기록 및 이력 */}
+      <MyPage />
 
       {/* 상담 신청 */}
       <section id="contact" className="py-20 bg-gradient-to-b from-blue-50 to-purple-50">
