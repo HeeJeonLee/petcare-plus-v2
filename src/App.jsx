@@ -9,6 +9,7 @@ import HospitalFinder from './components/HospitalFinder';
 import ClaimProcess from './components/ClaimProcess';
 import HealthCalculator from './components/HealthCalculator';
 import MyPage from './components/MyPage';
+import AdminDashboard from './components/AdminDashboard';
 import ChatBot from './components/ChatBot';
 import analytics from './utils/analytics';
 import contentGenerator from './utils/contentGenerator';
@@ -23,6 +24,16 @@ function App() {
     message: ''
   });
   const [submitting, setSubmitting] = useState(false);
+  const [adminMode, setAdminMode] = useState(false);
+
+  // URL 파라미터로 관리자 모드 활성화
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('admin') === 'true') {
+      setAdminMode(true);
+      console.log('✅ 관리자 모드 활성화됨');
+    }
+  }, []);
 
   // Analytics 및 Content Generation 초기화
   useEffect(() => {
@@ -185,8 +196,37 @@ function App() {
     }
   };
 
+  // 관리자 모드: 대시보드만 표시
+  if (adminMode) {
+    return (
+      <div className="min-h-screen bg-slate-100">
+        <div className="fixed top-4 right-4 z-50">
+          <button
+            onClick={() => setAdminMode(false)}
+            className="px-4 py-2 bg-red-600 text-white rounded-lg font-bold hover:bg-red-700"
+          >
+            ❌ 나가기
+          </button>
+        </div>
+        <AdminDashboard />
+      </div>
+    );
+  }
+
+  // 일반 모드: 일반 페이지 표시
   return (
     <div className="min-h-screen bg-white">
+      {/* 관리자 모드 진입 링크 (우측 상단 숨김) */}
+      <div className="fixed top-4 right-4 z-50 opacity-0 hover:opacity-100 transition-opacity">
+        <button
+          onClick={() => setAdminMode(true)}
+          className="px-3 py-1 text-xs bg-gray-800 text-white rounded opacity-50 hover:opacity-100"
+          title="관리자 대시보드"
+        >
+          ⚙️
+        </button>
+      </div>
+
       {/* 법적 면책 공고 */}
       <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-0">
         <p className="text-sm text-yellow-700 text-center">
