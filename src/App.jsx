@@ -218,9 +218,9 @@ function App() {
               <p className="opacity-90 flex-grow">메리츠, 삼성, 현대, KB, DB, 한화, 농협, 롯데</p>
             </div>
             <div className="bg-white bg-opacity-20 backdrop-blur-sm rounded-xl p-6 flex flex-col h-full">
-              <div className="text-4xl mb-3">🏆</div>
-              <h3 className="font-bold text-xl mb-2">미래에셋 GA</h3>
-              <p className="opacity-90 flex-grow">수인AI브릿지 펫보험 전문가 상담</p>
+              <div className="text-4xl mb-3">💬</div>
+              <h3 className="font-bold text-xl mb-2">AI 챗봇 상담</h3>
+              <p className="opacity-90 flex-grow">Claude AI 기반 24시간 무료 실시간 상담</p>
             </div>
           </div>
         </div>
@@ -375,9 +375,8 @@ function App() {
               <h4 className="font-bold mb-4">고객 지원</h4>
               <p className="text-gray-400">💬 위의 AI 챗봇 이용</p>
               <p className="text-gray-400">📋 상담 신청 폼 작성</p>
-              <p className="text-gray-400 mt-2 text-sm">24시간 내 연락</p>
+              <p className="text-gray-400 mt-2 text-sm">24시간 내 답변</p>
               <p className="text-gray-400">수인AI브릿지</p>
-              <p className="text-gray-400">수원시 영통구</p>
             </div>
           </div>
           <div className="border-t border-gray-800 mt-8 pt-8">

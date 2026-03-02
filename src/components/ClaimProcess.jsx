@@ -185,13 +185,13 @@ export default function ClaimProcess() {
               href="#contact"
               className="px-8 py-4 bg-white text-blue-600 rounded-full font-bold text-lg hover:bg-gray-100 transition-all shadow-lg"
             >
-              📋 상담 신청하기
+              📋 리포트 신청하기
             </a>
             <a
-              href="tel:010-5650-0670"
+              href="#contact"
               className="px-8 py-4 bg-transparent border-2 border-white text-white rounded-full font-bold text-lg hover:bg-white hover:text-blue-600 transition-all"
             >
-              📞 010-5650-0670
+              💬 AI 챗봇 상담
             </a>
           </div>
         </div>

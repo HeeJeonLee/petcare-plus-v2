@@ -377,7 +377,7 @@ export default function InsuranceComparison() {
         </div>
 
         {/* 보험사 카드 목록 */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
           {displayedCompanies.map(company => (
             <div
               key={company.id}
