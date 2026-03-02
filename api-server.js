@@ -9,6 +9,7 @@ import url from 'url';
 import { readFileSync } from 'fs';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
+import { COMPANY_INFO, generateEmailSignature } from './company-config.js';
 
 // .env.local 파일에서 환경 변수 로드
 const __filename = fileURLToPath(import.meta.url);
@@ -206,9 +207,9 @@ const server = http.createServer(async (req, res) => {
             </div>
 
             <div style="text-align: center; padding: 20px; color: #94a3b8; font-size: 12px;">
-              <p>🐾 PetCare+ | 수인AI브릿지 | Claude AI 기반 펫보험 상담</p>
+              <p>🐾 ${COMPANY_INFO.serviceName} | ${COMPANY_INFO.name} | Claude AI 기반 펫보험 상담</p>
               <p>📋 <strong>펫 라이프 맞춤 설계 리포트</strong></p>
-              <p>사업자등록번호: 151-09-03201 | 📞 010-5650-0670</p>
+              <p>사업자등록번호: ${COMPANY_INFO.businessNumber} | 📞 ${COMPANY_INFO.phone}</p>
             </div>
           </div>
         `;

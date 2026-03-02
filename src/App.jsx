@@ -13,6 +13,7 @@ import AdminDashboard from './components/AdminDashboard';
 import ChatBot from './components/ChatBot';
 import analytics from './utils/analytics';
 import contentGenerator from './utils/contentGenerator';
+import { COMPANY_INFO } from './constants/company';
 
 function App() {
   const [formData, setFormData] = useState({
@@ -510,24 +511,24 @@ function App() {
               </p>
             </div>
             <div>
-              <h4 className="font-bold mb-4">고객 지원</h4>
-              <p className="text-gray-400">💬 위의 AI 챗봇 이용</p>
-              <p className="text-gray-400">📋 상담 신청 폼 작성</p>
-              <p className="text-gray-400 mt-2 text-sm">24시간 내 답변</p>
-              <p className="text-gray-400">수인AI브릿지</p>
+              <h4 className="font-bold mb-4">📞 연락처</h4>
+              <p className="text-gray-400">📧 {COMPANY_INFO.email}</p>
+              <p className="text-gray-400">📱 {COMPANY_INFO.phone}</p>
+              <p className="text-gray-400">{COMPANY_INFO.name}</p>
+              <p className="text-blue-400 text-sm mt-2 block">24시간 AI 상담 가능</p>
             </div>
           </div>
           <div className="border-t border-gray-800 mt-8 pt-8">
             <div className="text-center mb-4">
               <a
-                href="/documents/PetCare+_사업계획서.pptx"
+                href="/documents/PetCare+_정책자금신청용_사업계획서.pptx"
                 download
                 className="inline-block px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all text-sm font-medium"
               >
                 📥 정부 정책자금 신청 사업계획서 다운로드
               </a>
             </div>
-            <p className="text-center text-gray-500">© 2026 PetCare+ | 수인AI브릿지 | 사업자등록번호: 151-09-03201 | 📞 010-5650-0670</p>
+            <p className="text-center text-gray-500">© 2026 PetCare+ | {COMPANY_INFO.name} | 사업자등록번호: {COMPANY_INFO.businessNumber} | 📞 {COMPANY_INFO.phone}</p>
             <p className="text-center text-gray-600 text-xs mt-2">본 페이지는 특정 보험 상품의 권유가 아닌, 정보 제공 및 전문가 연결 서비스를 목적으로 합니다.</p>
           </div>
         </div>
