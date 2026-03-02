@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import AIRecommendation from './components/AIRecommendation';
 import InsuranceComparison from './components/InsuranceComparison';
+import ComparisonChart from './components/ComparisonChart';
+import InsuranceEducation from './components/InsuranceEducation';
 import HospitalFinder from './components/HospitalFinder';
 import ClaimProcess from './components/ClaimProcess';
 import HealthCalculator from './components/HealthCalculator';
@@ -277,6 +279,27 @@ function App() {
 
       {/* 8개사 상세 비교 */}
       <InsuranceComparison />
+
+      {/* 비교 분석 차트 (다차원 비교, 시나리오) */}
+      <section id="comparison-charts" className="py-20 bg-gray-50">
+        <div className="max-w-6xl mx-auto px-4">
+          <div className="text-center mb-12">
+            <span className="inline-block px-4 py-2 bg-blue-100 text-blue-700 rounded-full text-sm font-semibold mb-4">
+              📊 고급 분석
+            </span>
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">
+              데이터 기반 보험 비교
+            </h2>
+            <p className="text-xl text-gray-600">
+              차트와 시나리오로 한눈에 비교하세요
+            </p>
+          </div>
+          <ComparisonChart />
+        </div>
+      </section>
+
+      {/* 펫보험 교육 센터 */}
+      <InsuranceEducation />
 
       {/* 주변 동물병원 찾기 */}
       <HospitalFinder />
