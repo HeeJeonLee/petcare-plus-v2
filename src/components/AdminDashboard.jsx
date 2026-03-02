@@ -1,15 +1,62 @@
 import { useState, useEffect } from 'react';
+import supabase, {
+  getConsultations,
+  getTodayConsultationCount,
+  getTotalConsultationCount,
+  subscribeToConsultations,
+  insuranceDataLocal,
+  analyticsDataLocal,
+  addContentLog
+} from '../utils/supabaseClient';
 
 export default function AdminDashboard() {
   const [activeTab, setActiveTab] = useState('overview');
   const [contentList, setContentList] = useState([]);
   const [insuranceData, setInsuranceData] = useState({});
+  const [consultations, setConsultations] = useState([]);
+  const [todayCount, setTodayCount] = useState(0);
+  const [totalCount, setTotalCount] = useState(0);
+  const [loading, setLoading] = useState(true);
   const [metrics, setMetrics] = useState({
-    totalVisitors: 15234,
-    conversionRate: 12.5,
-    avgSessionTime: '4m 32s',
-    bounceRate: 28.3
+    totalVisitors: analyticsDataLocal.totalVisitors,
+    conversionRate: analyticsDataLocal.conversionRate,
+    avgSessionTime: analyticsDataLocal.avgSessionTime,
+    bounceRate: analyticsDataLocal.bounceRate
   });
+
+  // 📊 Supabase 데이터 로드
+  useEffect(() => {
+    const loadData = async () => {
+      try {
+        // 상담 신청 목록 로드
+        const consultationData = await getConsultations(10);
+        setConsultations(consultationData);
+
+        // 통계 로드
+        const today = await getTodayConsultationCount();
+        const total = await getTotalConsultationCount();
+        setTodayCount(today);
+        setTotalCount(total);
+
+        console.log('✅ Admin 데이터 로드 완료');
+      } catch (err) {
+        console.error('❌ 데이터 로드 실패:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadData();
+
+    // 🔔 실시간 상담 신청 구독
+    const unsubscribe = subscribeToConsultations((newConsultation) => {
+      console.log('📬 새로운 상담:', newConsultation);
+      setConsultations(prev => [newConsultation, ...prev].slice(0, 10));
+      setTotalCount(prev => prev + 1);
+    });
+
+    return () => unsubscribe();
+  }, []);
 
   // 콘텐츠 목록 (자동 생성된 콘텐츠)
   const sampleContent = [
@@ -56,8 +103,9 @@ export default function AdminDashboard() {
     setContentList(sampleContent);
   }, []);
 
-  // 자동 콘텐츠 생성 함수
+  // 자동 콘텐츠 생성 함수 (Supabase 로깅 포함)
   const generateContent = async (type) => {
+    const timestamp = new Date().toLocaleString('ko-KR');
     const newContent = {
       id: contentList.length + 1,
       type,
@@ -69,36 +117,40 @@ export default function AdminDashboard() {
 
     setContentList([newContent, ...contentList]);
 
-    // 시뮬레이션: 1초 후 생성 완료
-    setTimeout(() => {
-      const updatedList = contentList.map(item =>
-        item.id === newContent.id
-          ? {
-              ...item,
-              title: `자동 생성됨: ${type} 콘텐츠 - ${new Date().toLocaleString('ko-KR')}`,
-              status: '검토 대기',
-              views: 0,
-              likes: 0,
-              engagement: 0
-            }
-          : item
-      );
-      setContentList([updatedList[0], ...contentList.slice(1)]);
-    }, 1000);
+    // ⏳ 시뮬레이션: 2초 후 생성 완료
+    setTimeout(async () => {
+      const finalContent = {
+        ...newContent,
+        id: contentList.length + 1,
+        title: `자동 생성됨: ${type} 콘텐츠 - ${timestamp}`,
+        status: '검토 대기',
+        views: 0,
+        likes: 0,
+        engagement: 0
+      };
+
+      setContentList([finalContent, ...contentList]);
+
+      // 📝 Supabase에 로깅
+      await addContentLog(type, finalContent.title, finalContent.platform);
+      console.log(`✅ ${type} 콘텐츠 생성 완료 및 로깅`);
+    }, 2000);
   };
 
-  // 보험료 수동 갱신
-  const updateInsuranceData = () => {
-    const updated = {
-      '메리츠': { premium: 25000, change: '+2%' },
-      '현대': { premium: 26000, change: '-0.5%' },
-      'KB': { premium: 30000, change: '+1.5%' },
-      'DB': { premium: 23000, change: '변화 없음' }
-    };
-    setInsuranceData(updated);
+  // 보험료 데이터 갱신
+  const updateInsuranceData = async () => {
+    try {
+      // 로컬 데이터에서 로드 (실제는 API 호출)
+      setInsuranceData(insuranceDataLocal);
+      console.log('✅ 보험료 데이터 갱신:', insuranceDataLocal);
 
-    // 성공 메시지
-    alert('✅ 보험료 데이터가 갱신되었습니다. (2026-03-02 14:35)');
+      // 성공 메시지
+      const now = new Date().toLocaleString('ko-KR');
+      alert(`✅ 보험료 데이터가 갱신되었습니다.\n갱신 시간: ${now}\n\n총 8개 보험사 데이터 로드됨`);
+    } catch (err) {
+      console.error('❌ 데이터 갱신 실패:', err);
+      alert('❌ 데이터 갱신에 실패했습니다.');
+    }
   };
 
   return (
@@ -143,12 +195,13 @@ export default function AdminDashboard() {
         {/* 1. 대시보드 */}
         {activeTab === 'overview' && (
           <div className="space-y-6">
+            {/* 📊 실시간 KPI */}
             <div className="grid md:grid-cols-4 gap-4">
               {[
-                { label: '방문자', value: metrics.totalVisitors.toLocaleString(), icon: '👥', color: 'blue' },
-                { label: '전환율', value: `${metrics.conversionRate}%`, icon: '📊', color: 'green' },
+                { label: '오늘 상담', value: todayCount.toString(), icon: '📞', color: 'blue' },
+                { label: '총 상담', value: totalCount.toString(), icon: '📋', color: 'green' },
                 { label: '평균 체류', value: metrics.avgSessionTime, icon: '⏱️', color: 'yellow' },
-                { label: '이탈율', value: `${metrics.bounceRate}%`, icon: '📉', color: 'red' }
+                { label: '전환율', value: `${metrics.conversionRate}%`, icon: '📊', color: 'purple' }
               ].map((metric, idx) => (
                 <div
                   key={idx}
@@ -156,10 +209,39 @@ export default function AdminDashboard() {
                 >
                   <p className="text-sm text-gray-600 mb-2">{metric.label}</p>
                   <p className="text-3xl font-bold text-gray-900">{metric.value}</p>
-                  <p className="text-xs text-gray-500 mt-2">지난 7일</p>
+                  <p className="text-xs text-gray-500 mt-2">실시간</p>
                 </div>
               ))}
             </div>
+
+            {/* 📬 최근 상담 신청 목록 */}
+            {consultations.length > 0 && (
+              <div className="bg-white rounded-xl shadow-lg p-6">
+                <h3 className="text-xl font-bold text-gray-900 mb-4">📬 최근 상담 신청 (실시간)</h3>
+                <div className="space-y-3 max-h-96 overflow-y-auto">
+                  {consultations.map((consultation, idx) => (
+                    <div key={idx} className="p-4 bg-blue-50 rounded-lg border-l-4 border-blue-500">
+                      <div className="flex items-start justify-between">
+                        <div className="flex-grow">
+                          <p className="font-bold text-gray-900">{consultation.name}</p>
+                          <p className="text-sm text-gray-600 mt-1">{consultation.pet_type} · {consultation.pet_age}</p>
+                          <p className="text-sm text-gray-700 mt-2 line-clamp-2">{consultation.message}</p>
+                        </div>
+                        <div className="text-right ml-4">
+                          <p className="text-xs text-gray-500">
+                            {new Date(consultation.created_at).toLocaleString('ko-KR')}
+                          </p>
+                          <span className="inline-block mt-2 px-2 py-1 bg-green-100 text-green-700 rounded text-xs font-bold">
+                            신규
+                          </span>
+                        </div>
+                      </div>
+                      <p className="text-xs text-blue-600 mt-2">📧 {consultation.email} | 📱 {consultation.phone}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
 
             {/* 자동화 상태 */}
             <div className="bg-white rounded-xl shadow-lg p-8">
