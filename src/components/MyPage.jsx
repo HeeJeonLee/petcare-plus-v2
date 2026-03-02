@@ -177,13 +177,13 @@ export default function MyPage() {
                             </div>
 
                             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-4 text-sm">
-                              {(consultation.phone || consultation.phone) && (
+                              {consultation.phone && (
                                 <div className="flex items-center gap-2">
                                   <span className="text-gray-500">📞</span>
                                   <span className="text-gray-700">{consultation.phone}</span>
                                 </div>
                               )}
-                              {(consultation.email || consultation.email) && (
+                              {consultation.email && (
                                 <div className="flex items-center gap-2">
                                   <span className="text-gray-500">📧</span>
                                   <span className="text-gray-700">{consultation.email}</span>
@@ -197,7 +197,7 @@ export default function MyPage() {
                               )}
                             </div>
 
-                            {(consultation.message || consultation.message) && (
+                            {consultation.message && (
                               <div className="bg-gray-50 rounded-lg p-4 mb-3">
                                 <p className="text-sm text-gray-700">
                                   <strong>📝 요청사항:</strong> {consultation.message}

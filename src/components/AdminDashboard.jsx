@@ -153,6 +153,14 @@ export default function AdminDashboard() {
     }
   };
 
+  // ✅ 컬러 매핑 (Tailwind 동적 클래스명 호환)
+  const colorClasses = {
+    blue: 'from-blue-50 to-blue-100 border-blue-500',
+    green: 'from-green-50 to-green-100 border-green-500',
+    yellow: 'from-yellow-50 to-yellow-100 border-yellow-500',
+    purple: 'from-purple-50 to-purple-100 border-purple-500'
+  };
+
   return (
     <section id="admin-dashboard" className="py-20 bg-gradient-to-b from-slate-50 to-slate-100 min-h-screen">
       <div className="max-w-7xl mx-auto px-4">
@@ -205,7 +213,7 @@ export default function AdminDashboard() {
               ].map((metric, idx) => (
                 <div
                   key={idx}
-                  className={`bg-gradient-to-br from-${metric.color}-50 to-${metric.color}-100 rounded-xl p-6 border-l-4 border-${metric.color}-500`}
+                  className={`bg-gradient-to-br ${colorClasses[metric.color]} rounded-xl p-6 border-l-4`}
                 >
                   <p className="text-sm text-gray-600 mb-2">{metric.label}</p>
                   <p className="text-3xl font-bold text-gray-900">{metric.value}</p>
