@@ -389,7 +389,7 @@ function App() {
                 📥 정부 정책자금 신청 사업계획서 다운로드
               </a>
             </div>
-            <p className="text-center text-gray-500">© 2026 PetCare+ | 수인AI브릿지 | 사업자등록번호: 151-09-03201</p>
+            <p className="text-center text-gray-500">© 2026 PetCare+ | 수인AI브릿지 | 사업자등록번호: 151-09-03201 | 📞 010-5650-0670</p>
             <p className="text-center text-gray-600 text-xs mt-2">본 페이지는 특정 보험 상품의 권유가 아닌, 정보 제공 및 전문가 연결 서비스를 목적으로 합니다.</p>
           </div>
         </div>

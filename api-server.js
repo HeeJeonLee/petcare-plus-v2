@@ -124,7 +124,7 @@ const server = http.createServer(async (req, res) => {
     return;
   }
 
-  // /api/send-email 엔드포인트
+  // /api/send-email 엔드포인트 (고객 정보 수신)
   if (req.url === '/api/send-email' && req.method === 'POST') {
     let body = '';
 
@@ -142,23 +142,26 @@ const server = http.createServer(async (req, res) => {
         if (!RESEND_API_KEY) {
           console.error('❌ RESEND_API_KEY 환경변수 없음');
           res.writeHead(500, { 'Content-Type': 'application/json' });
-          res.end(JSON.stringify({ error: 'RESEND API key missing' }));
+          res.end(JSON.stringify({
+            error: 'RESEND API key missing',
+            details: '환경변수 설정: RESEND_API_KEY=re_... 필요'
+          }));
           return;
         }
 
-        // 이메일 본문
+        // 이메일 본문 (관리자용 + 고객용 동일)
         const emailHtml = `
           <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
             <div style="background: linear-gradient(135deg, #2563eb, #7c3aed); padding: 30px; border-radius: 12px; text-align: center; margin-bottom: 30px;">
               <h1 style="color: white; margin: 0; font-size: 28px;">🐾 PetCare+</h1>
-              <p style="color: rgba(255,255,255,0.9); margin: 10px 0 0;">새로운 상담 신청이 접수되었습니다!</p>
+              <p style="color: rgba(255,255,255,0.9); margin: 10px 0 0;">펫 라이프 맞춤 설계 리포트 신청</p>
             </div>
 
             <div style="background: #f8fafc; border-radius: 12px; padding: 24px; margin-bottom: 20px;">
-              <h2 style="color: #1e293b; font-size: 18px; margin-top: 0;">📋 신청자 정보</h2>
+              <h2 style="color: #1e293b; font-size: 18px; margin-top: 0;">📋 신청 정보</h2>
               <table style="width: 100%; border-collapse: collapse;">
                 <tr style="border-bottom: 1px solid #e2e8f0;">
-                  <td style="padding: 12px 8px; color: #64748b; font-weight: bold; width: 30%;">이름</td>
+                  <td style="padding: 12px 8px; color: #64748b; font-weight: bold; width: 30%;">성함</td>
                   <td style="padding: 12px 8px; color: #1e293b; font-weight: 600;">${name || '-'}</td>
                 </tr>
                 <tr style="border-bottom: 1px solid #e2e8f0;">
@@ -173,50 +176,82 @@ const server = http.createServer(async (req, res) => {
                 </tr>
                 <tr style="border-bottom: 1px solid #e2e8f0;">
                   <td style="padding: 12px 8px; color: #64748b; font-weight: bold;">반려동물</td>
-                  <td style="padding: 12px 8px; color: #1e293b;">${petType || '-'} / ${petAge || '-'}</td>
+                  <td style="padding: 12px 8px; color: #1e293b;">${petType || '-'} (${petAge || '-'})</td>
                 </tr>
                 <tr>
                   <td style="padding: 12px 8px; color: #64748b; font-weight: bold; vertical-align: top;">상담 내용</td>
-                  <td style="padding: 12px 8px; color: #1e293b;">${message || '(내용 없음)'}</td>
+                  <td style="padding: 12px 8px; color: #1e293b;">${message || '(특별한 요청사항 없음)'}</td>
                 </tr>
               </table>
             </div>
 
             <div style="background: #fef3c7; border: 1px solid #fbbf24; border-radius: 12px; padding: 16px; margin-bottom: 20px;">
               <p style="margin: 0; color: #92400e; font-weight: bold;">
-                ⏰ 접수 시간: ${new Date().toLocaleString('ko-KR', { timeZone: 'Asia/Seoul' })}
+                ⏰ 신청 시간: ${new Date().toLocaleString('ko-KR', { timeZone: 'Asia/Seoul' })}
               </p>
-              <p style="margin: 8px 0 0; color: #92400e;">
-                📞 24시간 내 연락 권장: <a href="tel:${phone}" style="color: #92400e; font-weight: bold;">${phone}</a>
+              <p style="margin: 8px 0 0; color: #92400e; font-size: 14px;">
+                📧 우측 하단 AI 챗봇에서 24시간 무료 상담 가능합니다
+              </p>
+            </div>
+
+            <div style="background: #dbeafe; border: 1px solid #0ea5e9; border-radius: 12px; padding: 16px; margin-bottom: 20px;">
+              <p style="margin: 0; color: #0369a1; font-weight: bold;">
+                ✅ 상담 신청이 정상 접수되었습니다!
+              </p>
+              <p style="margin: 8px 0 0; color: #0369a1; font-size: 14px;">
+                • AI 챗봇: 즉시 24시간 무료 상담<br/>
+                • 맞춤 리포트: 신청 후 검토<br/>
+                • 전문가 연결: 필요 시 지원
               </p>
             </div>
 
             <div style="text-align: center; padding: 20px; color: #94a3b8; font-size: 12px;">
-              <p>PetCare+ | 수인AI브릿지 | Claude AI 기반 펫보험 상담</p>
-              <p>📧 ${email ? `답변: ${email}` : 'AI 챗봇에서 24시간 상담 가능'}</p>
-              <p>사업자등록번호: 151-09-03201</p>
+              <p>🐾 PetCare+ | 수인AI브릿지 | Claude AI 기반 펫보험 상담</p>
+              <p>📋 <strong>펫 라이프 맞춤 설계 리포트</strong></p>
+              <p>사업자등록번호: 151-09-03201 | 📞 010-5650-0670</p>
             </div>
           </div>
         `;
 
-        const recipientEmail = process.env.PETCARE_ADMIN_EMAIL || 'info@petcare-plus.com';
-        const fromEmail = process.env.PETCARE_FROM_EMAIL || 'noreply@petcare-plus.com';
+        const adminEmail = process.env.PETCARE_ADMIN_EMAIL;
+        if (!adminEmail) {
+          console.warn('⚠️ PETCARE_ADMIN_EMAIL이 설정되지 않았습니다. 이메일을 받으려면 설정이 필요합니다.');
+          res.writeHead(400, { 'Content-Type': 'application/json' });
+          res.end(JSON.stringify({
+            error: 'Admin email not configured',
+            details: '관리자 이메일 설정: PETCARE_ADMIN_EMAIL=your_email@gmail.com 필요'
+          }));
+          return;
+        }
 
-        console.log(`📧 이메일 발송 시도:`);
-        console.log(`   수신처: ${recipientEmail}`);
-        console.log(`   신청자: ${name} (${phone}, ${email})`);
+        const fromEmail = 'noreply@resend.dev'; // Resend 기본 발신자
+
+        console.log(`\n📧 ===== 이메일 발송 시작 =====`);
+        console.log(`   고객명: ${name}`);
+        console.log(`   연락처: ${phone}`);
+        console.log(`   고객 이메일: ${email || '(미입력)'}`);
+        console.log(`   반려동물: ${petType} / ${petAge}`);
+        console.log(`   상담 내용: ${message || '(없음)'}`);
+        console.log(`   관리자 이메일: ${adminEmail}`);
         console.log(`   API Key: ${RESEND_API_KEY.substring(0, 10)}...`);
 
         // Resend API 호출
         try {
           console.log('📨 Resend API로 요청 전송 중...');
           const requestBody = JSON.stringify({
-            from: `PetCare+ <${fromEmail}>`,
-            to: [recipientEmail],
+            from: `PetCare+ 상담팀 <${fromEmail}>`,
+            to: [adminEmail],
             cc: email ? [email] : [],
-            subject: `[PetCare+] 새 상담 신청 - ${name}님`,
+            subject: `[PetCare+] 새로운 펫 라이프 설계 신청 - ${name}`,
             html: emailHtml,
-            replyTo: email || recipientEmail
+            replyTo: email || adminEmail,
+            headers: {
+              'X-Customer-Name': name,
+              'X-Customer-Phone': phone,
+              'X-Customer-Email': email || 'no-email',
+              'X-Pet-Type': petType || 'unknown',
+              'X-Source': 'petcare-plus-form'
+            }
           });
 
           const response = await fetch('https://api.resend.com/emails', {
@@ -233,21 +268,45 @@ const server = http.createServer(async (req, res) => {
           const resendData = await response.json();
 
           if (response.ok) {
-            console.log('✅ 이메일 발송 성공');
-            console.log('   Message ID:', resendData.id);
+            console.log('✅ 이메일 발송 성공!');
+            console.log(`   Message ID: ${resendData.id}`);
+            console.log(`   받는사람: ${adminEmail}`);
+            if (email) console.log(`   CC: ${email}`);
+            console.log(`===== 이메일 발송 완료 =====\n`);
+
             res.writeHead(200, { 'Content-Type': 'application/json' });
-            res.end(JSON.stringify({ success: true, id: resendData.id }));
+            res.end(JSON.stringify({
+              success: true,
+              id: resendData.id,
+              message: '상담 신청이 접수되었습니다',
+              adminEmail,
+              customerEmail: email || null
+            }));
           } else {
-            console.error('❌ 이메일 발송 실패 (상태: ' + response.status + '):', resendData);
+            console.error('❌ 이메일 발송 실패!');
+            console.error(`   상태: ${response.status}`);
+            console.error(`   오류: ${JSON.stringify(resendData)}`);
+            console.log(`===== 이메일 발송 실패 =====\n`);
+
             res.writeHead(400, { 'Content-Type': 'application/json' });
-            res.end(JSON.stringify({ error: resendData.message || '이메일 발송 실패' }));
+            res.end(JSON.stringify({
+              error: resendData.message || '이메일 발송 실패',
+              details: resendData,
+              status: response.status
+            }));
           }
         } catch (fetchError) {
-          console.error('❌ Resend API 호출 실패 (오류 타입:', fetchError.constructor.name + ')');
-          console.error('   오류 메시지:', fetchError.message);
-          console.error('   오류 상세:', fetchError);
+          console.error('❌ Resend API 호출 실패!');
+          console.error(`   오류 타입: ${fetchError.constructor.name}`);
+          console.error(`   메시지: ${fetchError.message}`);
+          console.error(`   상세: ${JSON.stringify(fetchError)}`);
+          console.log(`===== 이메일 발송 오류 =====\n`);
+
           res.writeHead(500, { 'Content-Type': 'application/json' });
-          res.end(JSON.stringify({ error: `API 호출 실패: ${fetchError.message}` }));
+          res.end(JSON.stringify({
+            error: `API 호출 실패: ${fetchError.message}`,
+            type: fetchError.constructor.name
+          }));
         }
 
       } catch (error) {
