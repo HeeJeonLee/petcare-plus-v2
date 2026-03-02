@@ -6,12 +6,33 @@
     "RESEND_API_KEY": "@resend_api_key",
     "PETCARE_ADMIN_EMAIL": "@petcare_admin_email",
     "PETCARE_FROM_EMAIL": "@petcare_from_email",
-    "VITE_GOOGLE_MAPS_API_KEY": "@google_maps_api_key"
+    "VITE_GOOGLE_MAPS_API_KEY": "@google_maps_api_key",
+    "CRON_SECRET": "@cron_secret",
+    "SUPABASE_SERVICE_KEY": "@supabase_service_key"
   },
   "functions": {
     "api/**/*.js": {
       "memory": 1024,
       "maxDuration": 10
     }
-  }
+  },
+  "crons": [
+    {
+      "path": "/api/auto-generate-content.js?type=blog",
+      "schedule": "0 0 * * *"
+    },
+    {
+      "path": "/api/auto-generate-content.js?type=sns",
+      "schedule": "0 */4 * * *"
+    },
+    {
+      "path": "/api/auto-generate-content.js?type=newsletter",
+      "schedule": "0 8 ? * MON"
+    },
+    {
+      "path": "/api/send-notification.js",
+      "schedule": "0 9 * * *"
+    }
+  ]
 }
+
