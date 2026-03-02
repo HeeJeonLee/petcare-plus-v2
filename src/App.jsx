@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import AIRecommendation from './components/AIRecommendation';
 import InsuranceComparison from './components/InsuranceComparison';
+import AdvancedFilter from './components/AdvancedFilter';
+import InsurancePersonality from './components/InsurancePersonality';
 import ComparisonChart from './components/ComparisonChart';
 import InsuranceEducation from './components/InsuranceEducation';
 import HospitalFinder from './components/HospitalFinder';
@@ -279,6 +281,27 @@ function App() {
 
       {/* 8개사 상세 비교 */}
       <InsuranceComparison />
+
+      {/* 고급 필터링 */}
+      <section id="advanced-filter" className="py-20 bg-blue-50">
+        <div className="max-w-6xl mx-auto px-4">
+          <div className="text-center mb-12">
+            <span className="inline-block px-4 py-2 bg-blue-100 text-blue-700 rounded-full text-sm font-semibold mb-4">
+              🔍 스마트 필터
+            </span>
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">
+              당신의 상황에 맞는 보험 찾기
+            </h2>
+            <p className="text-xl text-gray-600">
+              견종, 건강상태, 우선순위로 맞춤 추천받으세요
+            </p>
+          </div>
+          <AdvancedFilter />
+        </div>
+      </section>
+
+      {/* AI 보험 성향 분석 */}
+      <InsurancePersonality />
 
       {/* 비교 분석 차트 (다차원 비교, 시나리오) */}
       <section id="comparison-charts" className="py-20 bg-gray-50">
