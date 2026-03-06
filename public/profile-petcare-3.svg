@@ -52,15 +52,15 @@
   <text x="323" y="245" text-anchor="middle" font-family="'Georgia', serif" font-size="42" font-weight="bold" fill="url(#accentBlue)">+</text>
 
   <!-- 한글 서브텍스트 -->
-  <text x="200" y="278" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" fill="#475569" letter-spacing="4">펫보험 비교 플랫폼</text>
+  <text x="200" y="278" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" fill="#475569" letter-spacing="4">PET INSURANCE</text>
 
   <!-- 중앙 구분선 -->
   <line x1="120" y1="298" x2="280" y2="298" stroke="url(#warmGold)" stroke-width="1" opacity="0.5"/>
   <circle cx="200" cy="298" r="3" fill="#d97706" opacity="0.4"/>
 
   <!-- 상담사 정보 -->
-  <text x="200" y="328" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" fill="#64748b" letter-spacing="1">이희전 상담사 | 미래에셋금융서비스</text>
-  <text x="200" y="350" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#94a3b8" letter-spacing="1">25년 경력 펫보험 전문 컨설턴트</text>
+  <text x="200" y="328" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" fill="#64748b" letter-spacing="1">petcareplus.kr</text>
+  <text x="200" y="350" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#94a3b8" letter-spacing="1">COMPARISON PLATFORM</text>
 
   <!-- 하단 장식 라인 -->
   <line x1="80" y1="375" x2="320" y2="375" stroke="url(#warmGold)" stroke-width="1.5" opacity="0.6"/>

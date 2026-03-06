@@ -67,8 +67,8 @@
   <line x1="130" y1="290" x2="270" y2="290" stroke="url(#blueAccent)" stroke-width="1" opacity="0.4"/>
 
   <!-- 서브 정보 -->
-  <text x="200" y="318" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" fill="#94a3b8" letter-spacing="3">펫보험 비교 전문</text>
-  <text x="200" y="345" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#64748b" letter-spacing="1">이희전 | 25년 경력 컨설턴트</text>
+  <text x="200" y="318" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" fill="#94a3b8" letter-spacing="3">PET INSURANCE</text>
+  <text x="200" y="345" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#64748b" letter-spacing="1">EXPERT CONSULTANT</text>
 
   <!-- 하단 도트 장식 -->
   <circle cx="170" cy="370" r="1.5" fill="#60a5fa" opacity="0.4"/>
