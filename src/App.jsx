@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import AIRecommendation from './components/AIRecommendation';
 import InsuranceComparison from './components/InsuranceComparison';
 import HospitalFinder from './components/HospitalFinder';
@@ -111,6 +112,12 @@ function App() {
             >
               📊 8개사 상세 비교
             </a>
+            <Link
+              to="/blog"
+              className="px-8 py-4 bg-transparent border-2 border-white text-white rounded-full font-bold text-lg hover:bg-white hover:text-blue-600 transition-all"
+            >
+              📝 펫보험 블로그
+            </Link>
           </div>
 
           <div className="mt-12 grid md:grid-cols-3 gap-6 text-left">
