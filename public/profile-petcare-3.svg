@@ -1,23 +1,69 @@
 <svg width="400" height="400" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <linearGradient id="bg3" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" style="stop-color:#3b82f6"/>
-      <stop offset="100%" style="stop-color:#8b5cf6"/>
+    <linearGradient id="bg3" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#fefce8"/>
+      <stop offset="30%" style="stop-color:#ffffff"/>
+      <stop offset="70%" style="stop-color:#f0f9ff"/>
+      <stop offset="100%" style="stop-color:#eff6ff"/>
     </linearGradient>
+    <linearGradient id="textGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1e3a5f"/>
+      <stop offset="100%" style="stop-color:#0f172a"/>
+    </linearGradient>
+    <linearGradient id="accentBlue" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#2563eb"/>
+      <stop offset="100%" style="stop-color:#1d4ed8"/>
+    </linearGradient>
+    <linearGradient id="warmGold" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#b45309"/>
+      <stop offset="50%" style="stop-color:#d97706"/>
+      <stop offset="100%" style="stop-color:#b45309"/>
+    </linearGradient>
+    <filter id="softShadow">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#1e3a5f" flood-opacity="0.15"/>
+    </filter>
   </defs>
-  <rect width="400" height="400" rx="40" fill="url(#bg3)"/>
-  <circle cx="200" cy="130" r="65" fill="rgba(255,255,255,0.15)"/>
-  <g transform="translate(200, 125)">
-    <ellipse cx="0" cy="10" rx="28" ry="33" fill="white" opacity="0.95"/>
-    <ellipse cx="-28" cy="-22" rx="13" ry="16" fill="white" opacity="0.95" transform="rotate(-15, -28, -22)"/>
-    <ellipse cx="28" cy="-22" rx="13" ry="16" fill="white" opacity="0.95" transform="rotate(15, 28, -22)"/>
-    <ellipse cx="-12" cy="-32" rx="11" ry="14" fill="white" opacity="0.95"/>
-    <ellipse cx="12" cy="-32" rx="11" ry="14" fill="white" opacity="0.95"/>
+
+  <!-- 밝은 배경 (고급 화이트 + 아이보리) -->
+  <rect width="400" height="400" rx="32" fill="url(#bg3)"/>
+
+  <!-- 외곽선 -->
+  <rect x="8" y="8" width="384" height="384" rx="26" fill="none" stroke="#1e3a5f" stroke-width="1.5" opacity="0.15"/>
+  <rect x="14" y="14" width="372" height="372" rx="22" fill="none" stroke="#1e3a5f" stroke-width="0.5" opacity="0.08"/>
+
+  <!-- 상단 장식 라인 -->
+  <line x1="80" y1="50" x2="320" y2="50" stroke="url(#warmGold)" stroke-width="1.5" opacity="0.6"/>
+  <circle cx="80" cy="50" r="3" fill="#d97706" opacity="0.5"/>
+  <circle cx="320" cy="50" r="3" fill="#d97706" opacity="0.5"/>
+
+  <!-- 발바닥 아이콘 - 세련된 네이비 -->
+  <g filter="softShadow" transform="translate(200, 145)">
+    <ellipse cx="0" cy="8" rx="35" ry="42" fill="url(#textGrad)" opacity="0.85"/>
+    <ellipse cx="-35" cy="-30" rx="16" ry="20" fill="url(#textGrad)" opacity="0.85" transform="rotate(-12, -35, -30)"/>
+    <ellipse cx="35" cy="-30" rx="16" ry="20" fill="url(#textGrad)" opacity="0.85" transform="rotate(12, 35, -30)"/>
+    <ellipse cx="-15" cy="-42" rx="14" ry="17" fill="url(#textGrad)" opacity="0.85"/>
+    <ellipse cx="15" cy="-42" rx="14" ry="17" fill="url(#textGrad)" opacity="0.85"/>
+    <!-- 하이라이트 -->
+    <ellipse cx="-5" cy="0" rx="14" ry="18" fill="rgba(255,255,255,0.1)"/>
   </g>
-  <text x="200" y="240" text-anchor="middle" font-family="Arial, sans-serif" font-size="48" font-weight="bold" fill="white">PetCare+</text>
-  <line x1="130" y1="260" x2="270" y2="260" stroke="rgba(255,255,255,0.4)" stroke-width="2"/>
-  <text x="200" y="295" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" fill="rgba(255,255,255,0.95)">펫보험 비교 플랫폼</text>
-  <text x="200" y="325" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" fill="rgba(255,255,255,0.8)">petcareplus.kr</text>
-  <rect x="100" y="350" width="200" height="30" rx="15" fill="rgba(255,255,255,0.2)"/>
-  <text x="200" y="370" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" fill="white">25년 경력 전문가 무료 상담</text>
+
+  <!-- 메인 텍스트 -->
+  <text x="200" y="245" text-anchor="middle" font-family="'Georgia', 'Times New Roman', serif" font-size="42" font-weight="bold" fill="url(#textGrad)" letter-spacing="2">PetCare</text>
+  <text x="323" y="245" text-anchor="middle" font-family="'Georgia', serif" font-size="42" font-weight="bold" fill="url(#accentBlue)">+</text>
+
+  <!-- 한글 서브텍스트 -->
+  <text x="200" y="278" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" fill="#475569" letter-spacing="4">펫보험 비교 플랫폼</text>
+
+  <!-- 중앙 구분선 -->
+  <line x1="120" y1="298" x2="280" y2="298" stroke="url(#warmGold)" stroke-width="1" opacity="0.5"/>
+  <circle cx="200" cy="298" r="3" fill="#d97706" opacity="0.4"/>
+
+  <!-- 상담사 정보 -->
+  <text x="200" y="328" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" fill="#64748b" letter-spacing="1">이희전 상담사 | 미래에셋금융서비스</text>
+  <text x="200" y="350" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#94a3b8" letter-spacing="1">25년 경력 펫보험 전문 컨설턴트</text>
+
+  <!-- 하단 장식 라인 -->
+  <line x1="80" y1="375" x2="320" y2="375" stroke="url(#warmGold)" stroke-width="1.5" opacity="0.6"/>
+  <circle cx="80" cy="375" r="3" fill="#d97706" opacity="0.5"/>
+  <circle cx="320" cy="375" r="3" fill="#d97706" opacity="0.5"/>
 </svg>
