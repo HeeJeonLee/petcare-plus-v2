@@ -3,6 +3,8 @@ import AIRecommendation from './components/AIRecommendation';
 import InsuranceComparison from './components/InsuranceComparison';
 import HospitalFinder from './components/HospitalFinder';
 import ClaimProcess from './components/ClaimProcess';
+import BlogWriter from './components/BlogWriter';
+import NaverAdGuide from './components/NaverAdGuide';
 import ChatBot from './components/ChatBot';
 
 function App() {
@@ -142,6 +144,12 @@ function App() {
 
       {/* 보험금 청구 프로세스 */}
       <ClaimProcess />
+
+      {/* 블로그 AI 글쓰기 도우미 */}
+      <BlogWriter />
+
+      {/* 네이버 키워드 광고 가이드 */}
+      <NaverAdGuide />
 
       {/* 상담 신청 */}
       <section id="contact" className="py-20 bg-gradient-to-b from-blue-50 to-purple-50">
